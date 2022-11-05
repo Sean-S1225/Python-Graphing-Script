@@ -1,0 +1,53 @@
+{
+    "RMSF": {
+        "name": "RMSF",
+        "numRows": 393,
+        "numPlots": 3,
+        "xAxisTitle": "Nanoseconds",
+        "yAxisTitle": "RMSD (Å)",
+        "movAvg": false,
+        "movAvgFr": 1000,
+        "palette": [
+            "#0043CB",
+            "#BF0202",
+            "#246210"
+        ],
+        "xLimit": [
+            1,
+            394
+        ],
+        "xTicks": [
+            0,
+            396,
+            20
+        ],
+        "xScale": 1
+    },
+    "RMSD": {
+        "name": "RMSD",
+        "numRows": 1001000,
+        "numPlots": 3,
+        "xAxisTitle": "Nanoseconds",
+        "yAxisTitle": "RMSD (Å)",
+        "movAvg": true,
+        "movAvgFr": 1000,
+        "palette": [
+            "#A7BCE8",
+            "#0043CB",
+            "#FDA4A4",
+            "#BF0202",
+            "#A0C595",
+            "#246210"
+        ],
+        "xLimit": [
+            1,
+            1000
+        ],
+        "xTicks": [
+            0,
+            1001,
+            100
+        ],
+        "xScale": 1000
+    }
+}
