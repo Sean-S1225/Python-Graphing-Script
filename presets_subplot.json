@@ -1,0 +1,114 @@
+{
+    "Seven": {
+        "name": "Seven",
+        "rows": 4,
+        "cols": 2,
+        "numSubPlots": 7,
+        "widthRatios": [
+            1,
+            1
+        ],
+        "heightRatios": [
+            1,
+            1,
+            1,
+            1
+        ],
+        "shareX": false,
+        "shareY": true
+    },
+    "1x4": {
+        "name": "1x4",
+        "rows": 1,
+        "cols": 4,
+        "numSubPlots": 4,
+        "widthRatios": [
+            1,
+            1,
+            1,
+            1
+        ],
+        "heightRatios": [
+            1
+        ],
+        "shareX": false,
+        "shareY": false
+    },
+    "Rama3x1": {
+        "name": "Rama3x1",
+        "rows": 3,
+        "cols": 1,
+        "numSubPlots": 3,
+        "widthRatios": [
+            1
+        ],
+        "heightRatios": [
+            1,
+            1,
+            1
+        ],
+        "shareX": false,
+        "shareY": false
+    },
+    "One": {
+        "name": "One",
+        "rows": 1,
+        "cols": 1,
+        "numSubPlots": 1,
+        "widthRatios": [
+            1
+        ],
+        "heightRatios": [
+            1
+        ],
+        "shareX": false,
+        "shareY": false
+    },
+    "Two": {
+        "name": "Two",
+        "rows": 1,
+        "cols": 2,
+        "numSubPlots": 2,
+        "widthRatios": [
+            1,
+            1
+        ],
+        "heightRatios": [
+            1
+        ],
+        "shareX": false,
+        "shareY": true
+    },
+    "Four": {
+        "name": "Four",
+        "rows": 2,
+        "cols": 2,
+        "numSubPlots": 4,
+        "widthRatios": [
+            1,
+            1
+        ],
+        "heightRatios": [
+            1,
+            1
+        ],
+        "shareX": false,
+        "shareY": false
+    },
+    "Three": {
+        "name": "Three",
+        "rows": 1,
+        "cols": 3,
+        "numSubPlots": 3,
+        "widthRatios": [
+            1,
+            1,
+            1
+        ],
+        "heightRatios": [
+            1
+        ],
+        "shareX": false,
+        "shareY": false
+    }
+}

@@ -1,0 +1,90 @@
+{
+    "One-BigRMSD": {
+        "name": "One-BigRMSD",
+        "rows": 1,
+        "cols": 1,
+        "numSubFigures": 1,
+        "widthRatios": [
+            1
+        ],
+        "heightRatios": [
+            1
+        ],
+        "width": 10,
+        "height": 13
+    },
+    "Rama4,3": {
+        "name": "Rama4,3",
+        "rows": 2,
+        "cols": 1,
+        "numSubFigures": 2,
+        "widthRatios": [
+            1
+        ],
+        "heightRatios": [
+            2,
+            1
+        ],
+        "width": 19,
+        "height": 8
+    },
+    "Rama4,4,3": {
+        "name": "Rama4,4,3",
+        "rows": 3,
+        "cols": 1,
+        "numSubFigures": 3,
+        "widthRatios": [
+            1
+        ],
+        "heightRatios": [
+            2,
+            2,
+            1
+        ],
+        "width": 19,
+        "height": 14
+    },
+    "Square": {
+        "name": "Square",
+        "rows": 1,
+        "cols": 1,
+        "numSubFigures": 1,
+        "widthRatios": [
+            1
+        ],
+        "heightRatios": [
+            1
+        ],
+        "width": 4,
+        "height": 4
+    },
+    "One": {
+        "name": "One",
+        "rows": 1,
+        "cols": 1,
+        "numSubFigures": 1,
+        "widthRatios": [
+            1
+        ],
+        "heightRatios": [
+            1
+        ],
+        "width": 10,
+        "height": 4
+    },
+    "Two": {
+        "name": "Two",
+        "rows": 2,
+        "cols": 1,
+        "numSubFigures": 2,
+        "widthRatios": [
+            1
+        ],
+        "heightRatios": [
+            1,
+            1
+        ],
+        "width": 8,
+        "height": 8
+    }
+}
