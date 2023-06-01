@@ -6,4 +6,10 @@ Data is read in from .tsv, .csv, or .dat files, in which each column is a differ
 Included in this GitHub repository are examples of my personal figure, subplot, and axis presets. I have included images of some of the plots that can be generated using this script, along with the presets used to generate them.
 
 ![RMSD_First_CA](https://github.com/Sean-S1225/Python-Graphing-Script/assets/66101203/4c74129b-54a7-409c-b4bf-21b8e971acd8)
+Figure preset: One, Subplot preset: Two, Axis presets: RMSD, RMSD
 
+![RMSF_CA](https://github.com/Sean-S1225/Python-Graphing-Script/assets/66101203/7803a104-59e9-49a0-9be2-e122277789ab)
+Figure preset: One, Subplot preset: Two, Axis presets: RMSF, RMSF
+
+![Res 376](https://github.com/Sean-S1225/Python-Graphing-Script/assets/66101203/25cd0b5d-1a0a-4f15-afa9-559f0b32d032)
+Figure preset: Rama4,4,3 Subplot preset: 1x4, 1x4, Rama3x1, presets: R_W, R_Y, R_P, R_All, R_W, R_Y, R_P, R_All, G_W, G_Y, G_P
