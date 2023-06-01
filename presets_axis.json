@@ -1,6 +1,7 @@
 {
     "RMSD_NoMovAvg": {
         "name": "RMSD_NoMovAvg",
+        "comment": "RMSD plot without any moving average",
         "type": "line",
         "numRows": 1001,
         "numPlots": 3,
@@ -37,6 +38,7 @@
     },
     "R_All": {
         "name": "R_All",
+        "comment": "Ramachandran plot meant to have WT, Y220C, PK11000 all in one",
         "type": "Ramachandran",
         "numRows": 1001,
         "numPlots": 3,
@@ -86,42 +88,9 @@
         "endNs": 393,
         "indexOffset": 2
     },
-    "Gradient": {
-        "name": "Gradient",
-        "type": "gradient",
-        "numRows": 0,
-        "numPlots": 1,
-        "xAxisTitle": "WT Nanoseconds",
-        "yAxisTitle": "",
-        "movAvg": false,
-        "movAvgFr": 0,
-        "palette": [],
-        "color": [
-            "plasma_r"
-        ],
-        "xLimit": [
-            1,
-            1001
-        ],
-        "xTicks": [
-            1,
-            1001,
-            100
-        ],
-        "xTicksMinor": null,
-        "xScale": null,
-        "xOffset": null,
-        "yLimit": [],
-        "yTicks": [],
-        "yTicksMinor": null,
-        "yScale": 1,
-        "yOffset": 0,
-        "startNs": 0,
-        "endNs": 0,
-        "indexOffset": 0
-    },
     "G_W": {
         "name": "G_W",
+        "comment": "When plotting a Ramachandran plot, use this gradient for WT",
         "type": "gradient",
         "numRows": 0,
         "numPlots": 1,
@@ -156,6 +125,7 @@
     },
     "G_Y": {
         "name": "G_Y",
+        "comment": "When plotting a Ramachandran plot, use this gradient for Y220C",
         "type": "gradient",
         "numRows": 0,
         "numPlots": 1,
@@ -190,6 +160,7 @@
     },
     "G_P": {
         "name": "G_P",
+        "comment": "When plotting a Ramachandran plot, use this gradient for PK11000",
         "type": "gradient",
         "numRows": 0,
         "numPlots": 1,
@@ -224,6 +195,7 @@
     },
     "R_W": {
         "name": "R_W",
+        "comment": "When plotting a Ramachandran plot, use this Ramachandran plot for WT",
         "type": "Ramachandran",
         "numRows": 1001,
         "numPlots": 1,
@@ -273,6 +245,7 @@
     },
     "R_Y": {
         "name": "R_Y",
+        "comment": "When plotting a Ramachandran plot, use this Ramachandran plot for Y220C",
         "type": "Ramachandran",
         "numRows": 1001,
         "numPlots": 1,
@@ -322,6 +295,7 @@
     },
     "R_P": {
         "name": "R_P",
+        "comment": "When plotting a Ramachandran plot, use this Ramachandran plot for PK11000",
         "type": "Ramachandran",
         "numRows": 1001,
         "numPlots": 1,
@@ -369,62 +343,9 @@
         "endNs": 393,
         "indexOffset": 2
     },
-    "Scatter": {
-        "name": "Scatter",
-        "type": "scatter",
-        "numRows": 10,
-        "numPlots": 1,
-        "xAxisTitle": "X-Axis",
-        "yAxisTitle": "Y-Axis",
-        "movAvg": false,
-        "movAvgFr": 0,
-        "palette": [],
-        "color": [
-            "plasma_r"
-        ],
-        "xLimit": null,
-        "xTicks": null,
-        "xTicksMinor": null,
-        "xScale": null,
-        "xOffset": null,
-        "yLimit": null,
-        "yTicks": null,
-        "yTicksMinor": null,
-        "yScale": null,
-        "yOffset": null,
-        "startNs": 0,
-        "endNs": 0,
-        "indexOffset": 0
-    },
-    "RMSF_TEST": {
-        "name": "RMSF_TEST",
-        "type": "line",
-        "numRows": 393,
-        "numPlots": 1,
-        "xAxisTitle": "Residue Number",
-        "yAxisTitle": "RMSF (Å)",
-        "movAvg": false,
-        "movAvgFr": 0,
-        "palette": [
-            "#0043CB"
-        ],
-        "color": "",
-        "xLimit": null,
-        "xTicks": null,
-        "xTicksMinor": null,
-        "xScale": null,
-        "xOffset": null,
-        "yLimit": null,
-        "yTicks": null,
-        "yTicksMinor": null,
-        "yScale": null,
-        "yOffset": null,
-        "startNs": 0,
-        "endNs": 0,
-        "indexOffset": 0
-    },
     "RMSF": {
         "name": "RMSF",
+        "comment": "",
         "type": "line",
         "numRows": 393,
         "numPlots": 3,
@@ -461,6 +382,7 @@
     },
     "RMSD": {
         "name": "RMSD",
+        "comment": "",
         "type": "line",
         "numRows": 1001000,
         "numPlots": 3,
@@ -498,8 +420,9 @@
         "endNs": 0,
         "indexOffset": 0
     },
-    "RMSD_TEST": {
-        "name": "RMSD_TEST",
+    "RMSD_One": {
+        "name": "RMSD_One",
+        "comment": "Just one RMSD dataset",
         "type": "line",
         "numRows": 1001000,
         "numPlots": 1,
@@ -509,11 +432,7 @@
         "movAvgFr": 1000,
         "palette": [
             "#A7BCE8",
-            "#0043CB",
-            "#FDA4A4",
-            "#BF0202",
-            "#A0C595",
-            "#246210"
+            "#0043CB"
         ],
         "color": [],
         "xLimit": [

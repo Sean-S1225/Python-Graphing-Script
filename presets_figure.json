@@ -1,6 +1,7 @@
 {
     "One-BigRMSD": {
         "name": "One-BigRMSD",
+        "comment": "A single RMSD plot, with a large picture.",
         "rows": 1,
         "cols": 1,
         "numSubFigures": 1,
@@ -15,6 +16,7 @@
     },
     "Rama4,3": {
         "name": "Rama4,3",
+        "comment": "Four Ramachandran plots (WT, Y220C, PK11000, All) horizontally, and three gradients vertically below them",
         "rows": 2,
         "cols": 1,
         "numSubFigures": 2,
@@ -30,6 +32,7 @@
     },
     "Rama4,4,3": {
         "name": "Rama4,4,3",
+        "comment": "Similar to Rama4,3, but with a second row of Ramachandran plots under the first",
         "rows": 3,
         "cols": 1,
         "numSubFigures": 3,
@@ -44,22 +47,9 @@
         "width": 19,
         "height": 14
     },
-    "Square": {
-        "name": "Square",
-        "rows": 1,
-        "cols": 1,
-        "numSubFigures": 1,
-        "widthRatios": [
-            1
-        ],
-        "heightRatios": [
-            1
-        ],
-        "width": 4,
-        "height": 4
-    },
     "One": {
         "name": "One",
+        "comment": "No subplots and ideal for two RMSD/RMSF plots side by side",
         "rows": 1,
         "cols": 1,
         "numSubFigures": 1,
@@ -71,20 +61,5 @@
         ],
         "width": 10,
         "height": 4
-    },
-    "Two": {
-        "name": "Two",
-        "rows": 2,
-        "cols": 1,
-        "numSubFigures": 2,
-        "widthRatios": [
-            1
-        ],
-        "heightRatios": [
-            1,
-            1
-        ],
-        "width": 8,
-        "height": 8
     }
 }

@@ -104,6 +104,8 @@ AxisTypes = [
 AxisValues = {
 	"name": Value("name", "What should the name of your preset be? ", "name [New Name]", "name ",
 		"The name of your preset. Only used to help identify and distinguish from other presets.", "Name: ", lambda name: type(name) == str, lambda name: name, "", True),
+	"comment": Value("comment", "Optionally leave a helpful comment to yourself about the purpose of this preset.", "comment [Comment]", "comment ",
+		"Just something to help you remember what this is used for when you come back to it later. Has no effect on the behavior of the preset.", "Comment: ", lambda comment: type(comment) == str, lambda comment: comment, "", False),
 	"type": Value("type", f"What type plot are you trying to make? {JoinLast(', ', AxisTypes, ', or ')} ", f"type [{'|'.join(AxisTypes)}]", "type ", 
 	    f"The type of plot you want to make with your data. The options are {JoinLast(', ', AxisTypes, ', and')}.", "Type: ", lambda t: t in AxisTypes, lambda t: t, "", True, False),
 	"numRows": Value("numRows", "How many rows are in the largest file? ", "numRows [Number of Rows]", "numRows ",
@@ -154,6 +156,8 @@ AxisValues = {
 FigureValues = {
 	"name": Value("name", "What should the name of this figure preset be? ", "name [Name]", "name ",
 	    "A name to help identify what this preset is used for.", "Name: ", lambda _: True, lambda str: str, "", True),
+	"comment": Value("comment", "Optionally leave a helpful comment to yourself about the purpose of this preset.", "comment [Comment]", "comment ",
+		"Just something to help you remember what this is used for when you come back to it later. Has no effect on the behavior of the preset.", "Comment: ", lambda comment: type(comment) == str, lambda comment: comment, "", False),
 	"rows": Value("rows", "How many rows of sub-figures are there? ", "rows [Number of Rows]", "rows ", 
 	    "Multiple sub-figures allows for more complex, less grid-based figures. How many rows of sub-figure do you want?", "Rows: ", lambda rows: rows.isdigit(), lambda rows: int(rows), 1, False, False),
 	"cols": Value("cols", "How many columns of sub-figures are there? ", "cols [Number of Rows]", "cols ", 
@@ -174,6 +178,8 @@ FigureValues = {
 SubplotValues = {
 	"name": Value("name", "What should the name of this figure preset be? ", "name [Name]", "name ",
 	    "A name to help identify what this preset is used for.", "Name: ", lambda _: True, lambda str: str, "", True),
+	"comment": Value("comment", "Optionally leave a helpful comment to yourself about the purpose of this preset.", "comment [Comment]", "comment ",
+		"Just something to help you remember what this is used for when you come back to it later. Has no effect on the behavior of the preset.", "Comment: ", lambda comment: type(comment) == str, lambda comment: comment, "", False),
 	"rows": Value("rows", "How many rows of sub-plots are there? ", "rows [Number of Rows]", "rows ", 
 	    "Multiple sub-figures allows for more complex, less grid-based plots. How many rows of sub-figure do you want?", "Rows: ", lambda rows: rows.isdigit(), lambda rows: int(rows), 1, False, False),
 	"cols": Value("cols", "How many columns of sub-plots are there? ", "cols [Number of Rows]", "cols ", 
@@ -313,7 +319,7 @@ class Preset:
 		for x in list(self.values.values()):
 			if not (x.advancedOption == True and showAdvanced == False):
 				toReturn += f"{x.display}{x.value}\n"
-		if showAdvanced == False:
+		if showAdvanced == False and reduce(lambda x: x.advancedOption, False, lambda x, y: x or y, list(self.values.values())):
 			toReturn += "---Advanced Options Hidden---"
 		return toReturn
 	
@@ -340,13 +346,14 @@ class AxisPreset(Preset):
 	"""
 	An established group of settings by which to graph data.
 	"""
-	def __init__(self, name: str = "", type: str = "", numRows: int = 0, numPlots: int = 0, xAxisTitle: str = "", yAxisTitle: str = "", movAvg: bool = False, 
+	def __init__(self, name: str = "", comment: str = "", type: str = "", numRows: int = 0, numPlots: int = 0, xAxisTitle: str = "", yAxisTitle: str = "", movAvg: bool = False, 
 	    	movAvgFr: int = 0, palette: list[str] = [], color: list[str] = [], xLimit: list[int] = [], xTicks: list[str] = [], xTicksMinor: list[int] = [], xScale: int = 1, xOffset: int = 0,
 			yLimit: int = 0, yTicks: list[int] = [], yTicksMinor: list[int] = [], yScale: int = 0, yOffset: int = 0, startNs: int = 0, endNs: int = 0, indexOffset : int = 0):
 		"""_summary_
 
 		Args:
 			name (str, optional): Name of the Preset. Defaults to "".
+			comment (str, optional): A helpful comment to provide more context preset. Defaults to "".
 			type (str, optional): The type or style of plot the user wants to create. Defaults to "".
 			numRows (int, optional): Of all the files that contain data to visualize, what is the maximum number of rows in them? Defaults to 0.
 			numPlots (int, optional): The number of datasets to plot. Defaults to 0.
@@ -372,6 +379,7 @@ class AxisPreset(Preset):
 		"""
 		self.values = copy.deepcopy(AxisValues)
 		self.values["name"].value = name
+		self.values["comment"].value = comment
 		self.values["type"].value = type
 		self.values["numRows"].value = numRows
 		self.values["numPlots"].value = numPlots
@@ -397,11 +405,12 @@ class AxisPreset(Preset):
 	
 
 class FigurePreset(Preset):
-	def __init__(self, name : str = "", rows : int = 0, cols : int = 0, numSubFigures : int = -1, widthRatios : list[int] = [], 
+	def __init__(self, name : str = "", comment : str = "", rows : int = 0, cols : int = 0, numSubFigures : int = -1, widthRatios : list[int] = [], 
 	    	heightRatios: list[int] = [], width : int = 0, height : int = 0) -> None:
 		"""
 		Args:
 			name (str, optional): The name of this group of settings. Defaults to "".
+			comment (str, optional): A helpful comment to provide more context preset. Defaults to "".
 			rows (int, optional): The number of rows of sub-figures. Defaults to 0.
 			cols (int, optional): The number of columns of sub-figures. Defaults to 0.
 			numSubFigures (int, optional): The number of sub-figures. Defaults to -1.
@@ -412,6 +421,7 @@ class FigurePreset(Preset):
 		"""
 		self.values = copy.deepcopy(FigureValues)
 		self.values["name"].value = name
+		self.values["comment"].value = comment
 		self.values["rows"].value = rows
 		self.values["cols"].value = cols
 		self.values["numSubFigures"].value = rows * cols if numSubFigures < 0 else numSubFigures
@@ -421,11 +431,12 @@ class FigurePreset(Preset):
 		self.values["height"].value = height
 
 class SubplotPreset(Preset):
-	def __init__(self, name: str, rows : int = 0, cols : int = 0, numSubPlots : int = -1, widthRatios : list[int] = [], heightRatios : list[int] = [],
+	def __init__(self, name: str, comment : str = "", rows : int = 0, cols : int = 0, numSubPlots : int = -1, widthRatios : list[int] = [], heightRatios : list[int] = [],
 	    	shareX : bool = False, shareY : bool = False) -> None:
 		"""
 		Args:
 			name (str): The name of this group of settings. 
+			comment (str, optional): A helpful comment to provide more context preset. Defaults to "".
 			rows (int, optional): The number of rows of subplots in this figure. Defaults to 0.
 			cols (int, optional): The number of columns of subplots in this figure. Defaults to 0.
 			numSubPlots (int, optional): The number of subplots. Defaults to -1.
@@ -436,6 +447,7 @@ class SubplotPreset(Preset):
 		"""
 		self.values = copy.deepcopy(SubplotValues)
 		self.values["name"].value = name
+		self.values["comment"].value = comment
 		self.values["rows"].value = rows
 		self.values["numSubPlots"].value = numSubPlots
 		self.values["cols"].value = cols
@@ -457,10 +469,7 @@ def new(Presets, presetFile, presetType):
 	elif presetType == SubplotPreset:
 		Preset = presetType(*[x.value for x in list(SubplotValues.values())])
 	else:
-		# Preset = presetType(*[x.value for x in list(AxisValues.values())])
-		# print({x.name: x.value for x in list(AxisValues.values())})
 		Preset = presetType(**{x.name: x.value for x in list(AxisValues.values())})
-	# preset = Preset("", 0, 0, "", "", False, 0, [], [], [], 1)
 
 	print("Note:\n\
 If you choose to save your file and you have not chosen a unique name, it will override the original.\nQuestions preceded by an asterisk (*) are mandatory, leaving optional questions will use the default settings. Type 'Help' for more information about any of the options.")

@@ -1,6 +1,7 @@
 {
     "Seven": {
         "name": "Seven",
+        "comment": "Designed for plotting the water box and timestep replicates",
         "rows": 4,
         "cols": 2,
         "numSubPlots": 7,
@@ -19,6 +20,7 @@
     },
     "1x4": {
         "name": "1x4",
+        "comment": "Four square plots in a row, used for Ramachandran plots (WT, Y220C, PK11000, All)",
         "rows": 1,
         "cols": 4,
         "numSubPlots": 4,
@@ -36,6 +38,7 @@
     },
     "Rama3x1": {
         "name": "Rama3x1",
+        "comment": "Three vertically stacked plots, used for gradients in Ramachandran plots (WT, Y220C, PK11000)",
         "rows": 3,
         "cols": 1,
         "numSubPlots": 3,
@@ -52,6 +55,7 @@
     },
     "One": {
         "name": "One",
+        "comment": "One single plot",
         "rows": 1,
         "cols": 1,
         "numSubPlots": 1,
@@ -66,6 +70,7 @@
     },
     "Two": {
         "name": "Two",
+        "comment": "Two side by side plots, often RMSD/RMSF",
         "rows": 1,
         "cols": 2,
         "numSubPlots": 2,
@@ -81,6 +86,7 @@
     },
     "Four": {
         "name": "Four",
+        "comment": "",
         "rows": 2,
         "cols": 2,
         "numSubPlots": 4,
@@ -97,6 +103,7 @@
     },
     "Three": {
         "name": "Three",
+        "comment": "",
         "rows": 1,
         "cols": 3,
         "numSubPlots": 3,
