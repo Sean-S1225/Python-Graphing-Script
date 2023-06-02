@@ -121,9 +121,9 @@ AxisValues = {
 	"movAvgFr": Value("movAvgFr", "How many frames would you like your moving average to be? ", "movAvgFr [Number of Frames]", "movAvgFr ",
 		"The number of frames by which to calculate the moving average. If movAvg = False, then this is ignored.", "Moving Average Frames: ", lambda movAvgFr: movAvgFr.isdigit(), lambda movAvgFr: int(movAvgFr), 0, True, restrictType=["line"]),
 	"palette": Value("palette", "Please enter the palette you would like to use, hex values separated only by a space. ", "palette [Hex Values separated by only a space]", "palette ", 
-		"Hex values determining the color of each dataset. If you are using a moving average, you should input 2*numPlots, in the order: [plot1] [mov avg plot1], etc", "Palette: ", lambda palette: palette == "" or reduce(lambda s: s[0] == "#" and len(s) == 7, True, lambda x, y: x and y, palette.split(" ")), lambda palette: palette.split(" "), [], False, restrictType=["line"]),
+		"Hex values determining the color of each dataset. If you are using a moving average, you should input 2*numPlots, in the order: [plot1] [mov avg plot1], etc", "Palette: ", lambda palette: palette == "" or reduce(lambda s: s[0] == "#" and len(s) == 7, True, lambda x, y: x and y, palette.split(" ")), lambda palette: palette.split(" "), [], False, restrictType=["line"], advancedOption=True),
 	"color": Value("color", "What are the colors/gradients are you using to color your scatter plots? You can add '_r' to reverse the order of the gradient. Separate each with a space. ", "color [New Color]", "color ", 
-		"What color should each point be? See https://matplotlib.org/stable/tutorials/colors/colormaps.html for a list of colors.", "Color: ", lambda _: True, lambda color: color.split(" "), "", False, restrictType=["scatter", "Ramachandran"]),
+		"What color should each point be? See https://matplotlib.org/stable/tutorials/colors/colormaps.html for a list of colors.", "Color: ", lambda _: True, lambda color: color.split(" "), "", False, restrictType=["scatter", "Ramachandran"], advancedOption=True),
 	"xLimit": Value("xLimit", "Please enter the upper and lower X-Bounds, separated by only a space. ", "xLimit [[Lower Bound] [Upper Bound]]", "xLimit ",
 		"Determines the X-Axis view limits. If left > right, then the X-Axis values will decrease from left to right.", "X Bounds: ", lambda xLimit: xLimit == "" or ((len(xLimit.split(" ")) == 2 and reduce(lambda s: IsDigit(s), True, lambda x, y: x and y, xLimit.split(" ")))), lambda xLimit: None if xLimit == "" else [int(x) for x in xLimit.split(" ")], [], False, advancedOption = True),
 	"xTicks": Value("xTicks", "Please enter the lower bound, upper bound, and frequency of ticks, each separated by one space. ", "xTicks [[Lower Bound] [Upper Bound] [Frequency]]", "xTicks ",
@@ -318,7 +318,11 @@ class Preset:
 		toReturn = ""
 		for x in list(self.values.values()):
 			if not (x.advancedOption == True and showAdvanced == False):
-				toReturn += f"{x.display}{x.value}\n"
+				if "type" in list(map(lambda x: x.name, list(self.values.values()))):
+					if self.values["type"].value in x.restrictType or x.restrictType == []:
+						toReturn += f"{x.display}{x.value}\n"
+				else:
+					toReturn += f"{x.display}{x.value}\n"
 		if showAdvanced == False and reduce(lambda x: x.advancedOption, False, lambda x, y: x or y, list(self.values.values())):
 			toReturn += "---Advanced Options Hidden---"
 		return toReturn
@@ -583,8 +587,10 @@ def greeting(Presets, presetFile) -> list[str]:
 			print("")
 		print("Please enter the name of the preset you would like to use.\n\
 Enter \"new\" if you would like to create a new preset from scratch,\n\
-or enter \"modify\" if you would like to edit an existing preset.\n\
-You will be prompted to enter the title of the picture, the title of the graph, and the subtitle later.")
+or enter \"modify\" if you would like to edit an existing preset.")
+		if type(list(Presets.values())[0]) == AxisPreset:
+			print("Finally, you may type \"advanced [preset name]\" to view all the settings associated with that preset.")
+		print("You will be prompted to enter the title of the picture, the title of the graph, and the subtitle later.")
 	else:
 		print(f"You have no presets on file. If you believe you should, check to find a {presetFile} file in this directory.")
 		print("Enter \"new\" to create a new preset from scratch.")
