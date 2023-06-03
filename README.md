@@ -13,3 +13,6 @@ Figure preset: One, Subplot preset: Two, Axis presets: RMSF, RMSF
 
 ![Res 376](https://github.com/Sean-S1225/Python-Graphing-Script/assets/66101203/25cd0b5d-1a0a-4f15-afa9-559f0b32d032)
 Figure preset: Rama4,4,3 Subplot preset: 1x4, 1x4, Rama3x1, presets: R_W, R_Y, R_P, R_All, R_W, R_Y, R_P, R_All, G_W, G_Y, G_P
+
+![RMSD_Abox_dt_Variable_AllAtom_First](https://github.com/Sean-S1225/Python-Graphing-Script/assets/66101203/24f410a4-d720-4455-b67e-451f984a8af3)
+Figure preset: One-BigRMSD, Subplot preset: Seven, Axis Presets: RMSD, RMSD_10FrAvg, RMSD, RMSD_10FrAvg, RMSD_10FrAvg, RMSD_10FrAvg, RMSD_10FrAvg
