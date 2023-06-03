@@ -1,17 +1,21 @@
 {
-    "RMSD_NoMovAvg": {
-        "name": "RMSD_NoMovAvg",
-        "comment": "RMSD plot without any moving average",
+    "RMSD_10FrAvg": {
+        "name": "RMSD_10FrAvg",
+        "comment": "Use this with datasets that have one RMSD value per nanosecond",
         "type": "line",
         "numRows": 1001,
         "numPlots": 3,
         "xAxisTitle": "Nanoseconds",
         "yAxisTitle": "RMSD (Å)",
-        "movAvg": false,
-        "movAvgFr": 0,
+        "movAvg": true,
+        "movAvgFr": 10,
+        "movAvgName": "[NAME] Mov. Avg.",
         "palette": [
+            "#A7BCE8",
             "#0043CB",
+            "#FDA4A4",
             "#BF0202",
+            "#A0C595",
             "#246210"
         ],
         "color": "",
@@ -46,6 +50,7 @@
         "yAxisTitle": "Ψ angle",
         "movAvg": false,
         "movAvgFr": 0,
+        "movAvgName": "",
         "palette": [],
         "color": [
             "YlOrRd",
@@ -98,6 +103,7 @@
         "yAxisTitle": "",
         "movAvg": false,
         "movAvgFr": 0,
+        "movAvgName": "",
         "palette": [],
         "color": [
             "YlOrRd"
@@ -133,6 +139,7 @@
         "yAxisTitle": "",
         "movAvg": false,
         "movAvgFr": 0,
+        "movAvgName": "",
         "palette": [],
         "color": [
             "GnBu"
@@ -168,6 +175,7 @@
         "yAxisTitle": "",
         "movAvg": false,
         "movAvgFr": 0,
+        "movAvgName": "",
         "palette": [],
         "color": [
             "RdPu"
@@ -203,6 +211,7 @@
         "yAxisTitle": "Ψ angle",
         "movAvg": false,
         "movAvgFr": 0,
+        "movAvgName": "",
         "palette": [],
         "color": [
             "YlOrRd"
@@ -253,6 +262,7 @@
         "yAxisTitle": "Ψ angle",
         "movAvg": false,
         "movAvgFr": 0,
+        "movAvgName": "",
         "palette": [],
         "color": [
             "GnBu"
@@ -303,6 +313,7 @@
         "yAxisTitle": "Ψ angle",
         "movAvg": false,
         "movAvgFr": 0,
+        "movAvgName": "",
         "palette": [],
         "color": [
             "RdPu"
@@ -353,6 +364,7 @@
         "yAxisTitle": "RMSF (Å)",
         "movAvg": false,
         "movAvgFr": 0,
+        "movAvgName": "",
         "palette": [
             "#0043CB",
             "#BF0202",
@@ -390,6 +402,7 @@
         "yAxisTitle": "RMSD (Å)",
         "movAvg": true,
         "movAvgFr": 1000,
+        "movAvgName": "[NAME] Mov. Avg.",
         "palette": [
             "#A7BCE8",
             "#0043CB",
@@ -430,6 +443,7 @@
         "yAxisTitle": "RMSD (Å)",
         "movAvg": true,
         "movAvgFr": 1000,
+        "movAvgName": "[NAME] Mov. Avg.",
         "palette": [
             "#A7BCE8",
             "#0043CB"

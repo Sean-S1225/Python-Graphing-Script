@@ -1,18 +1,15 @@
 import csv
-from genericpath import isfile
-from logging.config import valid_ident
 import seaborn as sns
 import matplotlib.pyplot as plt
 import pandas as pd
 import os.path
 import json
-from typing import Callable, TypeVar, Generic
+from typing import Callable
 from matplotlib.ticker import FormatStrFormatter
 import copy
 import re
 import numpy as np
 import matplotlib as mpl
-from time import sleep
 
 def reduce(eval, base, combine, arr):
 	"""This is used to reduce an array to single value
@@ -120,6 +117,8 @@ AxisValues = {
 		"A boolean determining if you want a moving average, useful for \"smoothing out\" noisy data.", "Moving Average? ", lambda movAvg: movAvg in ["Y", "N"], lambda movAvg: True if movAvg == "Y" else False, False, True, restrictType=["line"]),
 	"movAvgFr": Value("movAvgFr", "How many frames would you like your moving average to be? ", "movAvgFr [Number of Frames]", "movAvgFr ",
 		"The number of frames by which to calculate the moving average. If movAvg = False, then this is ignored.", "Moving Average Frames: ", lambda movAvgFr: movAvgFr.isdigit(), lambda movAvgFr: int(movAvgFr), 0, True, restrictType=["line"]),
+	"movAvgName": Value("movAvgName", "The name of the moving average, what will appear in the legend of the picture. See help for keywords", "movAvgName [New Name]", "movAvgName ", 
+		"The name of the dataset that will appear in the legend of this picture. Use \"[NAME]\" to insert the name of the original dataset or \"[NUM]\" to insert the number of frames into the name.", "Moving Average Name: ", lambda name: type(name) == str, lambda name: name, "[NAME] [NUM] Frame Mov. Avg.", True, restrictType=["line"]),
 	"palette": Value("palette", "Please enter the palette you would like to use, hex values separated only by a space. ", "palette [Hex Values separated by only a space]", "palette ", 
 		"Hex values determining the color of each dataset. If you are using a moving average, you should input 2*numPlots, in the order: [plot1] [mov avg plot1], etc", "Palette: ", lambda palette: palette == "" or reduce(lambda s: s[0] == "#" and len(s) == 7, True, lambda x, y: x and y, palette.split(" ")), lambda palette: palette.split(" "), [], False, restrictType=["line"], advancedOption=True),
 	"color": Value("color", "What are the colors/gradients are you using to color your scatter plots? You can add '_r' to reverse the order of the gradient. Separate each with a space. ", "color [New Color]", "color ", 
@@ -351,7 +350,7 @@ class AxisPreset(Preset):
 	An established group of settings by which to graph data.
 	"""
 	def __init__(self, name: str = "", comment: str = "", type: str = "", numRows: int = 0, numPlots: int = 0, xAxisTitle: str = "", yAxisTitle: str = "", movAvg: bool = False, 
-	    	movAvgFr: int = 0, palette: list[str] = [], color: list[str] = [], xLimit: list[int] = [], xTicks: list[str] = [], xTicksMinor: list[int] = [], xScale: int = 1, xOffset: int = 0,
+	    	movAvgFr: int = 0, movAvgName: str = "", palette: list[str] = [], color: list[str] = [], xLimit: list[int] = [], xTicks: list[str] = [], xTicksMinor: list[int] = [], xScale: int = 1, xOffset: int = 0,
 			yLimit: int = 0, yTicks: list[int] = [], yTicksMinor: list[int] = [], yScale: int = 0, yOffset: int = 0, startNs: int = 0, endNs: int = 0, indexOffset : int = 0):
 		"""_summary_
 
@@ -365,6 +364,7 @@ class AxisPreset(Preset):
 			yAxisTitle (str, optional): The title of the Y-Axis. Defaults to "".
 			movAvg (bool, optional): Is there a moving average on this dataset? Defaults to False.
 			movAvgFr (int, optional): If there is a moving average, the number of frames. Defaults to 0.
+			movAvgName (str, optional): The name of the moving average to appear in the legend of the picture.
 			palette (list[str], optional): A list of hex values corresponding to the color of plots. Defaults to [].
 			color (list[str], optional): The colors/gradients if the user is graphing a scatter plot. Defaults to [].
 			xLimit (list[int], optional): The maximum value shown on the X-Axis. Defaults to [].
@@ -391,6 +391,7 @@ class AxisPreset(Preset):
 		self.values["yAxisTitle"].value = yAxisTitle
 		self.values["movAvg"].value = movAvg
 		self.values["movAvgFr"].value = movAvgFr
+		self.values["movAvgName"].value = movAvgName
 		self.values["palette"].value = palette
 		self.values["color"].value = color
 		self.values["xLimit"].value = xLimit
@@ -618,7 +619,6 @@ def getPreset(Presets, presetFile, keys, presetType) -> AxisPreset:
 	preset = input("\n--- ")
 	while preset not in keys or (preset == "modify" and Presets == {}) or (preset[:8] == "advanced" and Presets == {}):
 		print("Invalid input.")
-		print(preset[:8] == "advanced" and Presets == {})
 		preset = input("\n--- ")
 
 	if preset == "new":
@@ -654,7 +654,7 @@ def getVariableValues(numSubplots: str) -> tuple[str, str, list[str], list[str]]
 		subplotTitles.append(temp)
 	return (pictureName, title, subfigureTitles, subplotTitles)
 
-def populateDatasets(axisPresetList: list[list[AxisPreset]], numSubPlots: list[int]) -> pd.DataFrame:
+def populateDatasets(axisPresetList: list[list[AxisPreset]], numSubPlots: list[int], subplotTitles: list[str]) -> pd.DataFrame:
 	"""Populates each dataset by getting input from the user
 
 	Args:
@@ -669,7 +669,8 @@ def populateDatasets(axisPresetList: list[list[AxisPreset]], numSubPlots: list[i
 		temp = [pd.DataFrame({})] * i
 		for j in range(i):
 			plots = []
-			print(axisPresetList[index][j].values["name"].value, axisPresetList[index][j].values["numPlots"].value)
+			print(f"We will now begin loading in data for the plot labeled {subplotTitles[index][j]}:")
+			# print(axisPresetList[index][j].values["name"].value, axisPresetList[index][j].values["numPlots"].value)
 			for x in range(axisPresetList[index][j].values["numPlots"].value):
 				x = Dataset(axisPresetList[index][j].values["numRows"].value)
 				x.Prompt()
@@ -679,7 +680,9 @@ def populateDatasets(axisPresetList: list[list[AxisPreset]], numSubPlots: list[i
 				x.Populate()
 				temp[j] = pd.concat([temp[j], x.AsDataFrame()], axis = 1)
 				if axisPresetList[index][j].values["movAvg"].value:
-					temp[j][f"{x.name} " + str(axisPresetList[index][j].values["movAvgFr"].value) + " Frame Mov. Avg."] = temp[j][x.name].apply(lambda x: x[0]).rolling(window = axisPresetList[index][j].values["movAvgFr"].value).mean()
+					# temp[j][f"{x.name} " + str(axisPresetList[index][j].values["movAvgFr"].value) + " Frame Mov. Avg."] = temp[j][x.name].apply(lambda x: x[0]).rolling(window = axisPresetList[index][j].values["movAvgFr"].value).mean()
+					movAvgName = axisPresetList[index][j].values["movAvgName"].value.replace("[NAME]", x.name).replace("[NUM]", str(axisPresetList[index][j].values["movAvgFr"].value))
+					temp[j][movAvgName] = temp[j][x.name].apply(lambda x: x[0]).rolling(window = axisPresetList[index][j].values["movAvgFr"].value).mean()
 
 			temp[j].reset_index(inplace=True)
 			xScale = axisPresetList[index][j].values["xScale"].value
@@ -1002,7 +1005,7 @@ def main():
 	numSubplots = [len(x) for x in axisPresetList]
 	
 	pictureName, title, subfigureTitles, subplotTitles = getVariableValues(numSubplots)
-	dataPlots = populateDatasets(axisPresetList, numSubplots)
+	dataPlots = populateDatasets(axisPresetList, numSubplots, subplotTitles)
 	plotHelper(axisPresetList, subplotPresetList, figurePreset, pictureName, title, dataPlots, subfigureTitles, subplotTitles)
 
 if __name__=="__main__":

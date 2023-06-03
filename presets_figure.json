@@ -1,7 +1,7 @@
 {
     "One-BigRMSD": {
         "name": "One-BigRMSD",
-        "comment": "A single RMSD plot, with a large picture.",
+        "comment": "Use with subplot preset seven for seven RMSD figures.",
         "rows": 1,
         "cols": 1,
         "numSubFigures": 1,
