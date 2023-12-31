@@ -1,4 +1,22 @@
 {
+    "Six": {
+        "name": "Six",
+        "comment": "Six RMSD/RMSF plots",
+        "rows": 3,
+        "cols": 2,
+        "numSubPlots": 6,
+        "widthRatios": [
+            1,
+            1
+        ],
+        "heightRatios": [
+            1,
+            1,
+            1
+        ],
+        "shareX": false,
+        "shareY": true
+    },
     "Seven": {
         "name": "Seven",
         "comment": "Designed for plotting the water box and timestep replicates",
@@ -68,8 +86,8 @@
         "shareX": false,
         "shareY": false
     },
-    "Two": {
-        "name": "Two",
+    "1x2": {
+        "name": "1x2",
         "comment": "Two side by side plots, often RMSD/RMSF",
         "rows": 1,
         "cols": 2,
@@ -79,6 +97,24 @@
             1
         ],
         "heightRatios": [
+            1
+        ],
+        "shareX": false,
+        "shareY": true
+    },
+    "2x1": {
+        "name": "2x1",
+        "comment": "Two vertical plots, often RMSD/RMSF",
+        "rows": 4,
+        "cols": 1,
+        "numSubPlots": 4,
+        "widthRatios": [
+            1
+        ],
+        "heightRatios": [
+            1,
+            1,
+            1,
             1
         ],
         "shareX": false,
@@ -104,18 +140,39 @@
     "Three": {
         "name": "Three",
         "comment": "",
-        "rows": 1,
-        "cols": 3,
+        "rows": 2,
+        "cols": 2,
         "numSubPlots": 3,
         "widthRatios": [
+            1,
+            1
+        ],
+        "heightRatios": [
+            1,
+            1
+        ],
+        "shareX": false,
+        "shareY": false
+    },
+    "Fourteen": {
+        "name": "Fourteen",
+        "comment": "Designed for plotting polar dihedral RMSD of the water box and timestep replicates",
+        "rows": 4,
+        "cols": 4,
+        "numSubPlots": 14,
+        "widthRatios": [
+            1,
             1,
             1,
             1
         ],
         "heightRatios": [
+            1,
+            1,
+            1,
             1
         ],
         "shareX": false,
-        "shareY": false
+        "shareY": true
     }
 }

@@ -10,6 +10,10 @@ import copy
 import re
 import numpy as np
 import matplotlib as mpl
+from pydoc import locate
+
+#TODO: Change all ranges to np.arrange
+#TODO: Store data in pd.DataFrame instead of list
 
 def reduce(eval, base, combine, arr):
 	"""This is used to reduce an array to single value
@@ -119,26 +123,36 @@ AxisValues = {
 		"The number of frames by which to calculate the moving average. If movAvg = False, then this is ignored.", "Moving Average Frames: ", lambda movAvgFr: movAvgFr.isdigit(), lambda movAvgFr: int(movAvgFr), 0, True, restrictType=["line"]),
 	"movAvgName": Value("movAvgName", "The name of the moving average, what will appear in the legend of the picture. See help for keywords", "movAvgName [New Name]", "movAvgName ", 
 		"The name of the dataset that will appear in the legend of this picture. Use \"[NAME]\" to insert the name of the original dataset or \"[NUM]\" to insert the number of frames into the name.", "Moving Average Name: ", lambda name: type(name) == str, lambda name: name, "[NAME] [NUM] Frame Mov. Avg.", True, restrictType=["line"]),
+	"onlyMovAvg": Value("onlyMovAvg", "Would you like to only display the moving average (as opposed to the actual data and the moving average)? (Y/N) ", "onlyMovAvg [Y | N]", "onlyMovAvg ",
+		"If, for example, your data is especially noisy, it may be clearer to only plot the moving average as opposed to both the data and the moving average.", "Only Moving Average: ", lambda x: x in ["Y", "N"], lambda x: x == "Y", "", False, True, restrictType=["line"]),
 	"palette": Value("palette", "Please enter the palette you would like to use, hex values separated only by a space. ", "palette [Hex Values separated by only a space]", "palette ", 
 		"Hex values determining the color of each dataset. If you are using a moving average, you should input 2*numPlots, in the order: [plot1] [mov avg plot1], etc", "Palette: ", lambda palette: palette == "" or reduce(lambda s: s[0] == "#" and len(s) == 7, True, lambda x, y: x and y, palette.split(" ")), lambda palette: palette.split(" "), [], False, restrictType=["line"], advancedOption=True),
 	"color": Value("color", "What are the colors/gradients are you using to color your scatter plots? You can add '_r' to reverse the order of the gradient. Separate each with a space. ", "color [New Color]", "color ", 
 		"What color should each point be? See https://matplotlib.org/stable/tutorials/colors/colormaps.html for a list of colors.", "Color: ", lambda _: True, lambda color: color.split(" "), "", False, restrictType=["scatter", "Ramachandran"], advancedOption=True),
 	"xLimit": Value("xLimit", "Please enter the upper and lower X-Bounds, separated by only a space. ", "xLimit [[Lower Bound] [Upper Bound]]", "xLimit ",
 		"Determines the X-Axis view limits. If left > right, then the X-Axis values will decrease from left to right.", "X Bounds: ", lambda xLimit: xLimit == "" or ((len(xLimit.split(" ")) == 2 and reduce(lambda s: IsDigit(s), True, lambda x, y: x and y, xLimit.split(" ")))), lambda xLimit: None if xLimit == "" else [int(x) for x in xLimit.split(" ")], [], False, advancedOption = True),
-	"xTicks": Value("xTicks", "Please enter the lower bound, upper bound, and frequency of ticks, each separated by one space. ", "xTicks [[Lower Bound] [Upper Bound] [Frequency]]", "xTicks ",
+	"xTicks": Value("xTicks", "Please enter the lower bound, upper bound, and number of ticks on the X-Axis, each separated by one space. Endpoints are included, and count to the total number of ticks. ", "xTicks [[Lower Bound] [Upper Bound] [Frequency]]", "xTicks ",
 		"Determines where the ticks on the X-Axis begin and end, and how frequent they are.", "X Ticks: ", lambda xTicks: xTicks == "" or ((len(xTicks.split(" ")) == 3 and reduce(lambda s: IsDigit(s), True, lambda x, y: x and y, xTicks.split(" ")))), lambda xTicks: None if xTicks == "" else [int(x) for x in xTicks.split(" ")], [], False, advancedOption = True),
-	"xTicksMinor": Value("xTicksMinor", "Please enter the lower bound, upper bound, and frequency of minor ticks, separated by a space. ", "xTicksMinor [[Lower Bound] [Upper Bound] [Frequency]]", "xTicksMinor ", 
+	"xTicksType": Value("xTicksType", "Optionally enter the datatype of the numbers associated with the X-Axis ticks (int, float, etc). ", "xTicksType [datatype]", "xTicksType ",
+		"By default the type will be float, but you can specify it to be an int, etc.", "xTicksType: ", lambda type: type, lambda type: locate(type), float, False, True),
+	"xTicksMinor": Value("xTicksMinor", "Please enter the lower bound, upper bound, and number of minor ticks on the X-Axis, each separated by one space. Endpoints are included, and count to the total number of ticks. ", "xTicksMinor [[Lower Bound] [Upper Bound] [Frequency]]", "xTicksMinor ", 
 		"Allows for minor ticks to be added to the plot for ease of readings.", "X Ticks (Minor): ", lambda xTicks: xTicks == "" or ((len(xTicks.split(" ")) == 3 and reduce(lambda s: IsDigit(s), True, lambda x, y: x and y, xTicks.split(" ")))), lambda xTicks: None if xTicks == "" else [int(x) for x in xTicks.split(" ")], [], False, advancedOption = True),
+	"xMinorTicksType": Value("xMinorTicksType", "Optionally enter the datatype of the numbers associated with the minor X-Axis ticks (int, float, etc). ", "xMinorTicksType [datatype]", "xMinorTicksType ",
+		"By default the type will be float, but you can specify it to be an int, etc.", "xTicksType: ", lambda type: type, lambda type: locate(type), float, False, True),
 	"xScale": Value("xScale", "What should the scale of the X-Axis be? ", "xScale [Scale]", "xScale ",
 		"One unit on the X-Axis should be equal to how many units in the data?", "X Scale: ", lambda xScale: xScale == "" or IsDigit(xScale), lambda xScale: None if xScale == "" else int(xScale), 1, False, advancedOption = True),
 	"xOffset": Value("xOffset", "Should the x-values be offset by any amount? ", "xOffset [Offset Value]", "xOffset ",
 		"Shifts the values of the x-axis to the left or right by a specified amount", "X Offset: ", lambda xOffset: xOffset == "" or IsDigit(xOffset), lambda xOffset: None if xOffset == "" else int(xOffset), 0, False, advancedOption = True),
 	"yLimit": Value("yLimit", "Please enter the upper and lower Y-Bounds, separated by only a space. ", "yLimit [[Lower Bound] [Upper Bound]]", "yLimit ",
 		"Determines the Y-Axis view limits. If left > right, then the Y-Axis values will decrease from left to right.", "Y Bounds: ", lambda yLimit: yLimit == "" or ((len(yLimit.split(" ")) == 2 and reduce(lambda s: IsDigit(s), True, lambda x, y: x and y, yLimit.split(" ")))), lambda yLimit: None if yLimit == "" else [int(x) for x in yLimit.split(" ")], [], False, advancedOption = True, restrictType=["line", "scatter", "Ramachandran"]),
-	"yTicks": Value("yTicks", "Please enter the lower bound, upper bound, and frequency of ticks, each separated by one space. ", "yTicks [[Lower Bound] [Upper Bound] [Frequency]]", "yTicks ",
+	"yTicks": Value("yTicks", "Please enter the lower bound, upper bound, and number of ticks on the Y-Axis, each separated by one space. Endpoints are included, and count to the total number of ticks. ", "yTicks [[Lower Bound] [Upper Bound] [Frequency]]", "yTicks ",
 		"Determines where the ticks on the Y-Axis begin and end, and how frequent they are.", "Y Ticks: ", lambda yTicks: yTicks == "" or ((len(yTicks.split(" ")) == 3 and reduce(lambda s: IsDigit(s), True, lambda x, y: x and y, yTicks.split(" ")))), lambda yTicks: None if yTicks == "" else [int(x) for x in yTicks.split(" ")], [], False, advancedOption = True, restrictType=["line", "scatter", "Ramachandran"]),
-	"yTicksMinor": Value("yTicksMinor", "Please enter the lower bound, upper bound, and frequency of minor ticks, separated by a space. ", "yTicksMinor [[Lower Bound] [Upper Bound] [Frequency]]", "yTicksMinor ", 
+	"yTicksType": Value("yTicksType", "Optionally enter the datatype of the numbers associated with the Y-Axis ticks (int, float, etc). ", "yTicksType [datatype]", "yTicksType ",
+		"By default the type will be float, but you can specify it to be an int, etc.", "yTicksType: ", lambda type: type, lambda type: locate(type), float, False, True),
+	"yTicksMinor": Value("yTicksMinor", "Please enter the lower bound, upper bound, and number of minor ticks on the Y-Axis, each separated by one space. Endpoints are included, and count to the total number of ticks. ", "yTicksMinor [[Lower Bound] [Upper Bound] [Frequency]]", "yTicksMinor ", 
 		"Allows for minor ticks to be added to the plot for ease of readings.", "Y Ticks (Minor): ", lambda yTicks: yTicks == "" or ((len(yTicks.split(" ")) == 3 and reduce(lambda s: IsDigit(s), True, lambda x, y: x and y, yTicks.split(" ")))), lambda yTicks: None if yTicks == "" else [int(y) for y in yTicks.split(" ")], [], False, advancedOption = True),
+	"yMinorTicksType": Value("yMinorTicksType", "Optionally enter the datatype of the numbers associated with the minor Y-Axis ticks (int, float, etc). ", "yMinorTicksType [datatype]", "yMinorTicksType ",
+		"By default the type will be float, but you can specify it to be an int, etc.", "yMinorTicksType: ", lambda type: type, lambda type: locate(type), float, False, True),
 	"yScale": Value("yScale", "What should the scale of the Y-Axis be? ", "yScale [Scale]", "yScale ",
 		"One unit on the Y-Axis should be equal to how many units in the data?", "Y Scale: ", lambda yScale: yScale == "" or IsDigit(yScale), lambda yScale: None if yScale == "" else int(yScale), 1, False, advancedOption = True, restrictType=["line", "scatter", "Ramachandran"]),
 	"yOffset": Value("yOffset", "Should the y-values be offset by any amount? ", "yOffset [Offset Value]", "yOffset ",
@@ -162,7 +176,7 @@ FigureValues = {
 	"cols": Value("cols", "How many columns of sub-figures are there? ", "cols [Number of Rows]", "cols ", 
 	    "Multiple sub-figures allows for more complex, less grid-based figures. How many columns of sub-figure do you want?", "Columns: ", lambda cols: cols.isdigit(), lambda cols: int(cols), 1, False, False),
 	"numSubFigures": Value("numSubFigures", "How many sub-figures do you want? ", "numSubFigures [Number of SubFigures]", "numSubFigures ",
-		"How many sub-figures do you want in each subplot? For example, two rows and columns of sub-figures but only three sub-figures will delete the bottom right sub-figure.", "Number of SubFigures: ", lambda num: num.isdigit(), lambda num: str(num), False, False),
+		"How many sub-figures do you want in each subplot? For example, two rows and columns of sub-figures but only three sub-figures will delete the bottom right sub-figure.", "Number of SubFigures: ", lambda num: num.isdigit(), lambda num: int(num), False, False),
 	"widthRatios": Value("widthRatios", "Please enter the ratios of widths of plots, separated by a space. ", "widthRatios [Ratio List Separated by a Space]", "widthRatios ", 
 		"What should the ratio of widths be, for each plot in each row? The length of the list should be equal to the number of columns.", "Width Ratios: ", lambda wRatios: reduce(lambda num: num.isdigit(), True, lambda x, y: x and y, wRatios.split()), lambda wRatios: None if wRatios == "" else [int(x) for x in wRatios.split(" ")], [1], False, False),
 	"heightRatios": Value("heightRatios", "Please enter the ratios of height of plots, separated by a space. ", "heightRatios [Ratio List Separated by a Space]", "heightRatios ", 
@@ -190,9 +204,9 @@ SubplotValues = {
 	"heightRatios": Value("heightRatios", "Please enter the ratios of height of plots, separated by a space. ", "heightRatios [Ratio List Separated by a Space]", "heightRatios ", 
 		"What should the ratio of height be, for each plot in each column? The length of the list should be equal to the number of rows.", "Height Ratios: ", lambda hRatios: reduce(lambda num: num.isdigit(), True, lambda x, y: x and y, hRatios.split()), lambda hRatios: None if hRatios == "" else [int(x) for x in hRatios.split(" ")], [1], False, False),
 	"shareX": Value("shareX", "Would you like each subplot to share the X-Axis? (Y/N) ", "shareX [Y | N]", "shareX ",
-		"If bounds are not placed on the start and end value of the X-Axis, this will set each sub-plot to have the same start, end, etc. values.", "ShareX: ", lambda x: True if x == "Y" else False, lambda x: x, False, False),
+		"If bounds are not placed on the start and end value of the X-Axis, this will set each sub-plot to have the same start, end, etc. values.", "ShareX: ", lambda x: x in ["Y", "N"], lambda x: True if x == "Y" else False, False, False),
 	"shareY": Value("shareY", "Would you like each subplot to share the Y-Axis? (Y/N) ", "shareY [Y | N]", "shareY ",
-		"If bounds are not placed on the start and end value of the Y-Axis, this will set each sub-plot to have the same start, end, etc. values.", "ShareY: ", lambda x: True if x == "Y" else False, lambda x: x, False, False),
+		"If bounds are not placed on the start and end value of the Y-Axis, this will set each sub-plot to have the same start, end, etc. values.", "ShareY: ", lambda x: x in ["Y", "N"], lambda x: True if x == "Y" else False, False, False)
 }
 
 class Dataset:
@@ -239,12 +253,13 @@ class Dataset:
 					# self.data[index] = [float(x) for x in value[1:]]
 					if index != 0:
 						self.data.append([float(x) for x in value[1:]])
+						# print(self.data[-1])
 		elif self.path[len(self.path)-4:] == ".dat":
 			print(f"Begin Reading {self.path}")
 			self.data = [0] * self.length
 			with open(self.path) as fd:
 				for lineNumber, line in enumerate(fd):
-					if lineNumber != 0: #We don't want a header
+					if lineNumber != 0 and lineNumber < len(self.data): #We don't want a header
 						#The file should be in the format: "   ###1      ###2", where ###1 is the index, and ###2 is the value
 						#The following line will, for each line, give the following list: ["   ###1", "      ###2"]
 						l = re.findall(" *-?\d+\.?\d*", line)
@@ -266,6 +281,7 @@ class Dataset:
 			# 	print(x)
 			self.data = [x[1] if type(x) == list else [x] for x in self.data]
 			# print(self.data)
+			print(self.data)
 			print(f"End Reading {self.path}")
 		else:
 			raise ValueError("Data file must be in .csv, .tsv, or .dat format.")
@@ -298,7 +314,7 @@ class Dataset:
 		Converts the Dataset to a DataFrame format
 		"""
 		if self.movAvg:
-			print(f"Len data: {len(self.data)}, len avg: {len(self.movAvg)}")
+			# print(f"Len data: {len(self.data)}, len avg: {len(self.movAvg)}")
 			dataFrame = pd.DataFrame({self.name : self.data, f"{self.name} {self.amount} Frame\nMov Avg" : self.movAvg})
 		else:
 			dataFrame = pd.DataFrame({self.name : self.data})
@@ -350,8 +366,8 @@ class AxisPreset(Preset):
 	An established group of settings by which to graph data.
 	"""
 	def __init__(self, name: str = "", comment: str = "", type: str = "", numRows: int = 0, numPlots: int = 0, xAxisTitle: str = "", yAxisTitle: str = "", movAvg: bool = False, 
-	    	movAvgFr: int = 0, movAvgName: str = "", palette: list[str] = [], color: list[str] = [], xLimit: list[int] = [], xTicks: list[str] = [], xTicksMinor: list[int] = [], xScale: int = 1, xOffset: int = 0,
-			yLimit: int = 0, yTicks: list[int] = [], yTicksMinor: list[int] = [], yScale: int = 0, yOffset: int = 0, startNs: int = 0, endNs: int = 0, indexOffset : int = 0):
+	    	movAvgFr: int = 0, movAvgName: str = "", onlyMovAvg: bool = False, palette: list[str] = [], color: list[str] = [], xLimit: list[int] = [], xTicks: list[str] = [], xTicksType: str = "float", xTicksMinor: list[int] = [], xMinorTicksType: str = "float", 
+			xScale: int = 1, xOffset: int = 0, yLimit: int = 0, yTicks: list[int] = [], yTicksType: str = "float", yTicksMinor: list[int] = [], yMinorTicksType: str = "float", yScale: int = 0, yOffset: int = 0, startNs: int = 0, endNs: int = 0, indexOffset : int = 0):
 		"""_summary_
 
 		Args:
@@ -365,16 +381,21 @@ class AxisPreset(Preset):
 			movAvg (bool, optional): Is there a moving average on this dataset? Defaults to False.
 			movAvgFr (int, optional): If there is a moving average, the number of frames. Defaults to 0.
 			movAvgName (str, optional): The name of the moving average to appear in the legend of the picture.
+			onlyMovAvg (bool, optional): Should both the data and the moving average be plotted, or just the moving average?
 			palette (list[str], optional): A list of hex values corresponding to the color of plots. Defaults to [].
 			color (list[str], optional): The colors/gradients if the user is graphing a scatter plot. Defaults to [].
 			xLimit (list[int], optional): The maximum value shown on the X-Axis. Defaults to [].
 			xTicks (list[str], optional): The start, end, and frequency of tick marks on the X-Axis. Defaults to [].
+			xTicksType (str, optional): The datatype of the numbers associated with the X-Ticks. Defaults to "float".
 			xTicksMinor (list[int], optional): The start, end, and frequency of minor ticks on the X-Axis. Defaults to [].
+			xMinorTicksType (str, optional): The datatype of the numbers associated with the minor X-Ticks. Defaults to "float".
 			xScale (int, optional): Scales the values on the X-Axis by a factor. Defaults to 1.
 			xOffset (int, optional): Adds an offset to each of the values. Defaults to 0.
 			yLimit (int, optional): The maximum value shown on the Y-Axis. Defaults to 0.
 			yTicks (list[int], optional): The start, end, and frequency of tick marks on the Y-Axis. Defaults to [].
+			yTicksType (str, optional): The datatype of the numbers associated with the y-Ticks. Defaults to "float".
 			yTicksMinor (list[int], optional): The start, end and frequency of minor ticks on the Y-Axis. Defaults to [].
+			yMinorTicksType (str, optional): The datatype of the numbers associated with the minor Y-Ticks. Defaults to "float".
 			yScale (int, optional): Scales the values on the Y-Axis by a factor. Defaults to 0.
 			yOffset (int, optional): Adds an offset to each of the values. Defaults to 0.
 			startNs (int, optional): If the user is plotting a range of nanoseconds, what is the starting value? Defaults to 0.
@@ -392,16 +413,21 @@ class AxisPreset(Preset):
 		self.values["movAvg"].value = movAvg
 		self.values["movAvgFr"].value = movAvgFr
 		self.values["movAvgName"].value = movAvgName
+		self.values["onlyMovAvg"].value = onlyMovAvg
 		self.values["palette"].value = palette
 		self.values["color"].value = color
 		self.values["xLimit"].value = xLimit
 		self.values["xTicks"].value = xTicks
+		self.values["xTicksType"].value = xTicksType
 		self.values["xTicksMinor"].value = xTicksMinor
+		self.values["xMinorTicksType"].value = xMinorTicksType
 		self.values["xScale"].value = xScale
 		self.values["xOffset"].value = xOffset
 		self.values["yLimit"].value = yLimit
 		self.values["yTicks"].value = yTicks
+		self.values["yTicksType"].value = yTicksType
 		self.values["yTicksMinor"].value = yTicksMinor
+		self.values["yMinorTicksType"].value = yMinorTicksType
 		self.values["yScale"].value = yScale
 		self.values["yOffset"].value = yOffset
 		self.values["startNs"].value = startNs
@@ -512,7 +538,7 @@ If you choose to save your file and you have not chosen a unique name, it will o
 		with open(presetFile, "w", encoding="utf-8") as f:
 			json.dump(dict, f, ensure_ascii=False, indent=4)
 
-	return Preset
+	return Preset, Presets | {Preset.values["name"].value, Preset}
 
 def modify(Presets, presetFile, presetType) -> AxisPreset:
 	"""
@@ -527,6 +553,8 @@ def modify(Presets, presetFile, presetType) -> AxisPreset:
 
 	#Need to create a copy otherwise all the values will just be overwritten
 	oldPreset = Presets[modify].copy(presetType)
+
+	print(oldPreset.asString(True))
 
 	print("You can use the following commands to modify the preset:")
 	for x in list(oldPreset.values.values()):
@@ -573,7 +601,7 @@ Otherwise it will save as a copy of the original.")
 		with open(presetFile, "w", encoding="utf-8") as f:
 			json.dump(dict, f, ensure_ascii=False, indent=4)
 
-	return oldPreset
+	return oldPreset, Presets | {oldPreset.values["name"].value: oldPreset}
 
 def greeting(Presets, presetFile) -> list[str]:
 	"""
@@ -622,16 +650,16 @@ def getPreset(Presets, presetFile, keys, presetType) -> AxisPreset:
 		preset = input("\n--- ")
 
 	if preset == "new":
-		preset = new(Presets, presetFile, presetType)
+		preset, Presets = new(Presets, presetFile, presetType)
 	elif preset == "modify":
-		preset = modify(Presets, presetFile, presetType)
+		preset, Presets = modify(Presets, presetFile, presetType)
 	elif preset[:8] == "advanced":
 		print(Presets[preset[9:]].asString(True))
 		return getPreset(Presets, presetFile, keys, presetType)
 	else:
 		preset = Presets[preset]
 
-	return preset
+	return preset, Presets
 
 
 def getVariableValues(numSubplots: str) -> tuple[str, str, list[str], list[str]]:
@@ -683,6 +711,8 @@ def populateDatasets(axisPresetList: list[list[AxisPreset]], numSubPlots: list[i
 					# temp[j][f"{x.name} " + str(axisPresetList[index][j].values["movAvgFr"].value) + " Frame Mov. Avg."] = temp[j][x.name].apply(lambda x: x[0]).rolling(window = axisPresetList[index][j].values["movAvgFr"].value).mean()
 					movAvgName = axisPresetList[index][j].values["movAvgName"].value.replace("[NAME]", x.name).replace("[NUM]", str(axisPresetList[index][j].values["movAvgFr"].value))
 					temp[j][movAvgName] = temp[j][x.name].apply(lambda x: x[0]).rolling(window = axisPresetList[index][j].values["movAvgFr"].value).mean()
+					if axisPresetList[index][j].values["onlyMovAvg"].value:
+						temp[j] = temp[j].drop(x.name, axis=1)
 
 			temp[j].reset_index(inplace=True)
 			xScale = axisPresetList[index][j].values["xScale"].value
@@ -701,11 +731,12 @@ def populateDatasets(axisPresetList: list[list[AxisPreset]], numSubPlots: list[i
 
 			temp[j]["index"] = temp[j]["index"].apply(lambda x: x/xScale + xOffset)
 			for x in plots:
-				if type(temp[j][x.name].iloc[0]) == list:
-					# print(temp[j][x.name])
-					temp[j][x.name] = temp[j][x.name].apply(lambda y: [item/yScale + yOffset for item in y] if type(y) == list else y)
-				else:
-					temp[j][x.name] = temp[j][x.name].apply(lambda y: y/yScale + yOffset)
+				if x.name in temp[j].columns:
+					if type(temp[j][x.name].iloc[0]) == list:
+						# print(temp[j][x.name])
+						temp[j][x.name] = temp[j][x.name].apply(lambda y: [item/yScale + yOffset for item in y] if type(y) == list else y)
+					else:
+						temp[j][x.name] = temp[j][x.name].apply(lambda y: y/yScale + yOffset)
 
 			temp[j] = pd.melt(temp[j], ["index"])
 		dataPlots.append(temp)
@@ -784,11 +815,11 @@ def plot(axisPreset, subplotPreset, figurePreset, pictureName, title, suptitle, 
 		if axisPreset.values["xLimit"].value != None:
 			ax.set_xlim(axisPreset.values["xLimit"].value[0], axisPreset.values["xLimit"].value[1])
 		if axisPreset.values["xTicks"].value != None:
-			ax.set_xticks(range(axisPreset.values["xTicks"].value[0], axisPreset.values["xTicks"].value[1], axisPreset.values["xTicks"].value[2]))
+			ax.set_xticks(np.linspace(axisPreset.values["xTicks"].value[0], axisPreset.values["xTicks"].value[1], num=axisPreset.values["xTicks"].value[2], endpoint=True, dtype=axisPreset.values["xTicksType"].value))
 		if axisPreset.values["yLimit"].value != None:
 			ax.set_ylim(axisPreset.values["yLimit"].value[0], axisPreset.values["yLimit"].value[1])
 		if axisPreset.values["yTicks"].value != None:
-			ax.set_xticks(range(axisPreset.values["yTicks"].value[0], axisPreset.values["yTicks"].value[1], axisPreset.values["yTicks"].value[2]))
+			ax.set_xticks(np.linspace(axisPreset.values["yTicks"].value[0], axisPreset.values["yTicks"].value[1], axisPreset.values["yTicks"].value[2], endpoint=True, dtype=axisPreset.values["yTicksType"].value))
 		axes.ticklabel_format(style='plain')
 		axes.margins(0)
 	fig.legend(*legend_without_duplicate_labels(axs), borderaxespad = 0, bbox_to_anchor = (0.5, 0), ncol = 3, loc = "upper center", edgecolor = "white", framealpha = 0)
@@ -799,6 +830,7 @@ def linePlot(axisPreset, ax, title, dataPlots):
 	# print(f"Working on plot {index + 1}")
 	print(dataPlots)
 	dataPlots["value"] = dataPlots["value"].apply(lambda x: x[0] if type(x) == list else x)
+	# dataPlots["value"] = dataPlots["value"].apply(lambda x: x[0] if type(x) == list and len(x) > 0 else (None if len(x) == 0 else x))
 	print(dataPlots)
 	if axisPreset.values["palette"].value == [""]:
 		ax = sns.lineplot(data = dataPlots, x = "index", y = "value", dashes = False, hue = "variable", ax = ax)
@@ -811,15 +843,15 @@ def linePlot(axisPreset, ax, title, dataPlots):
 	if axisPreset.values["xLimit"].value != None:
 		ax.set_xlim(axisPreset.values["xLimit"].value[0], axisPreset.values["xLimit"].value[1])
 	if axisPreset.values["xTicks"].value != None:
-		ax.set_xticks(range(axisPreset.values["xTicks"].value[0], axisPreset.values["xTicks"].value[1], axisPreset.values["xTicks"].value[2]))
+		ax.set_xticks(np.linspace(axisPreset.values["xTicks"].value[0], axisPreset.values["xTicks"].value[1], axisPreset.values["xTicks"].value[2], endpoint=True, dtype=axisPreset.values["xTicksType"].value))
 	if axisPreset.values["yLimit"].value != None:
 		ax.set_ylim(axisPreset.values["yLimit"].value[0], axisPreset.values["yLimit"].value[1])
 	if axisPreset.values["yTicks"].value != None:
-		ax.set_xticks(range(axisPreset.values["yTicks"].value[0], axisPreset.values["yTicks"].value[1], axisPreset.values["yTicks"].value[2]))
+		ax.set_yticks(np.linspace(axisPreset.values["yTicks"].value[0], axisPreset.values["yTicks"].value[1], axisPreset.values["yTicks"].value[2], endpoint=True, dtype=axisPreset.values["yTicksType"].value))
 	if axisPreset.values["xTicksMinor"].value != None:
-		ax.set_xticks(range(axisPreset.values["xTicksMinor"].value[0], axisPreset.values["xTicksMinor"].value[1], axisPreset.values["xTicks"].value[2]), minor=True)
+		ax.set_xticks(np.linspace(axisPreset.values["xTicksMinor"].value[0], axisPreset.values["xTicksMinor"].value[1], axisPreset.values["xTicksMinor"].value[2], endpoint=True, dtype=axisPreset.values["xMinorTicksType"].value), minor=True)
 	if axisPreset.values["yTicksMinor"].value != None:
-		ax.set_xticks(range(axisPreset.values["yTicksMinor"].value[0], axisPreset.values["yTicksMinor"].value[1], axisPreset.values["yTicks"].value[2]), minor=True)
+		ax.set_yticks(np.linspace(axisPreset.values["yTicksMinor"].value[0], axisPreset.values["yTicksMinor"].value[1], axisPreset.values["yTicksMinor"].value[2], endpoint=True, dtype=axisPreset.values["yMinorTicksType"].value), minor=True)
 	ax.ticklabel_format(style='plain')
 	ax.margins(0)
 
@@ -835,13 +867,13 @@ def scatterPlot(axisPreset, ax, title, dataPlots):
 	if axisPreset.values["yLimit"].value != None:
 		ax.set_ybound(lower = axisPreset.values["yLimit"].value[0], upper = axisPreset.values["yLimit"].value[1])
 	if axisPreset.values["xTicks"].value != None:
-		ax.set_xticks(range(axisPreset.values["xTicks"].value[0], axisPreset.values["xTicks"].value[1], axisPreset.values["xTicks"].value[2]))
+		ax.set_xticks(np.linspace(axisPreset.values["xTicks"].value[0], axisPreset.values["xTicks"].value[1], axisPreset.values["xTicks"].value[2], endpoint=True, dtype=axisPreset.values["xTicksType"].value))
 	if axisPreset.values["yTicks"].value != None:
-		ax.set_yticks(range(axisPreset.values["yTicks"].value[0], axisPreset.values["yTicks"].value[1], axisPreset.values["yTicks"].value[2]))
+		ax.set_yticks(np.linspace(axisPreset.values["yTicks"].value[0], axisPreset.values["yTicks"].value[1], axisPreset.values["yTicks"].value[2], endpoint=True, dtype=axisPreset.values["yTicksType"].value))
 	if axisPreset.values["xTicksMinor"].value != None:
-		ax.set_xticks(range(axisPreset.values["xTicksMinor"].value[0], axisPreset.values["xTicksMinor"].value[1], axisPreset.values["xTicks"].value[2]), minor=True)
+		ax.set_xticks(np.linspace(axisPreset.values["xTicksMinor"].value[0], axisPreset.values["xTicksMinor"].value[1], axisPreset.values["xTicksMinor"].value[2], endpoint=True, dtype=axisPreset.values["xMinorTicksType"].value), minor=True)
 	if axisPreset.values["yTicksMinor"].value != None:
-		ax.set_yticks(range(axisPreset.values["yTicksMinor"].value[0], axisPreset.values["yTicksMinor"].value[1], axisPreset.values["yTicks"].value[2]), minor=True)
+		ax.set_yticks(np.linspace(axisPreset.values["yTicksMinor"].value[0], axisPreset.values["yTicksMinor"].value[1], axisPreset.values["yTicksMinor"].value[2], endpoint=True, dtype=axisPreset.values["yMinorTicksType"].value), minor=True)
 
 	ax.tick_params(axis="both", which = "minor")
 	ax.grid(visible=True, which="minor", axis="both")
@@ -866,13 +898,13 @@ def ramachandranPlot(axisPreset, ax, title, dataPlots, ns):
 	if axisPreset.values["yLimit"].value != None:
 		ax.set_ybound(lower = axisPreset.values["yLimit"].value[0], upper = axisPreset.values["yLimit"].value[1])
 	if axisPreset.values["xTicks"].value != None:
-		ax.set_xticks(range(axisPreset.values["xTicks"].value[0], axisPreset.values["xTicks"].value[1], axisPreset.values["xTicks"].value[2]))
+		ax.set_xticks(np.linspace(axisPreset.values["xTicks"].value[0], axisPreset.values["xTicks"].value[1], axisPreset.values["xTicks"].value[2], endpoint=True, dtype=axisPreset.values["xTicksType"].value))
 	if axisPreset.values["yTicks"].value != None:
-		ax.set_yticks(range(axisPreset.values["yTicks"].value[0], axisPreset.values["yTicks"].value[1], axisPreset.values["yTicks"].value[2]))
+		ax.set_yticks(np.linspace(axisPreset.values["yTicks"].value[0], axisPreset.values["yTicks"].value[1], axisPreset.values["yTicks"].value[2], endpoint=True, dtype=axisPreset.values["yTicksType"].value))
 	if axisPreset.values["xTicksMinor"].value != None:
-		ax.set_xticks(range(axisPreset.values["xTicksMinor"].value[0], axisPreset.values["xTicksMinor"].value[1], axisPreset.values["xTicksMinor"].value[2]), minor=True)
+		ax.set_xticks(np.linspace(axisPreset.values["xTicksMinor"].value[0], axisPreset.values["xTicksMinor"].value[1], axisPreset.values["xTicksMinor"].value[2], endpoint=True, dtype=axisPreset.values["xMinorTicksType"].value), minor=True)
 	if axisPreset.values["yTicksMinor"].value != None:
-		ax.set_yticks(range(axisPreset.values["yTicksMinor"].value[0], axisPreset.values["yTicksMinor"].value[1], axisPreset.values["yTicksMinor"].value[2]), minor=True)
+		ax.set_yticks(np.linspace(axisPreset.values["yTicksMinor"].value[0], axisPreset.values["yTicksMinor"].value[1], axisPreset.values["yTicksMinor"].value[2], endpoint=True, dtype=axisPreset.values["yMinorTicksType"].value), minor=True)
 
 	ax.tick_params(axis="both", which = "minor")
 	ax.grid(visible=True, which="minor", axis="both")
@@ -955,6 +987,7 @@ def plotHelper(axisPresetList, subplotPresetList, figurePreset, pictureName, tit
 								gradientPlot(axisPresetList[i][j], ax)
 					else:
 						subfig.delaxes(ax)
+				# subfig.legend(*legend_without_duplicate_labels(axes), borderaxespad = 0, ncol = 1, loc='center left', bbox_to_anchor=(1, 0.5), edgecolor = "white", framealpha = 0, scatterpoints=3)
 				subfig.legend(*legend_without_duplicate_labels(axes), borderaxespad = 0, bbox_to_anchor = (0.5, 0), ncol = 3, loc = "upper center", edgecolor = "white", framealpha = 0, scatterpoints=3)
 			else:
 				#remove subfigure
@@ -977,7 +1010,7 @@ def main():
 	AxisPresets = loadPresets(AxisPresets, axisPresetFile, AxisPreset)
 
 	keys = greeting(FigurePresets, figurePresetFile)
-	figurePreset = getPreset(FigurePresets, figurePresetFile, keys, FigurePreset)
+	figurePreset, _ = getPreset(FigurePresets, figurePresetFile, keys, FigurePreset)
 	print("\nYou have chosen the following preset:")
 	print(figurePreset.asString(True))
 
@@ -985,7 +1018,8 @@ def main():
 	print(f"You need to select {figurePreset.values['numSubFigures'].value} subplot preset(s).")
 	for _ in range(figurePreset.values["numSubFigures"].value):
 		keys = greeting(SubplotPresets, subplotPresetFile)
-		subplotPreset = getPreset(SubplotPresets, subplotPresetFile, keys, SubplotPreset)
+		subplotPreset, SubplotPresetsNew = getPreset(SubplotPresets, subplotPresetFile, keys, SubplotPreset)
+		SubplotPresets = copy.deepcopy(SubplotPresetsNew)
 		print("\nYou have chosen the following preset:")
 		print(subplotPreset.asString(True))
 		subplotPresetList.append(subplotPreset)
@@ -996,14 +1030,14 @@ def main():
 		temp = []
 		print(f"For subplot number {index + 1} of {figurePreset.values['numSubFigures'].value}, you must choose {subplotPresetList[index].values['numSubPlots'].value} plot presets.")
 		for _ in range(subplotPresetList[index].values["numSubPlots"].value):
-			axisPreset = getPreset(AxisPresets, axisPresetFile, keys, AxisPreset)
+			axisPreset, AxisPresetsNew = getPreset(AxisPresets, axisPresetFile, keys, AxisPreset)
+			AxisPresets = copy.deepcopy(AxisPresetsNew)
 			print("\nYou have chosen the following preset:")
 			print(axisPreset.asString(True))
 			temp.append(axisPreset)
 		axisPresetList.append(temp)
 
 	numSubplots = [len(x) for x in axisPresetList]
-	
 	pictureName, title, subfigureTitles, subplotTitles = getVariableValues(numSubplots)
 	dataPlots = populateDatasets(axisPresetList, numSubplots, subplotTitles)
 	plotHelper(axisPresetList, subplotPresetList, figurePreset, pictureName, title, dataPlots, subfigureTitles, subplotTitles)

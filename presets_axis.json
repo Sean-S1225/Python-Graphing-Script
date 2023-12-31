@@ -10,6 +10,7 @@
         "movAvg": true,
         "movAvgFr": 10,
         "movAvgName": "[NAME] Mov. Avg.",
+        "onlyMovAvg": false,
         "palette": [
             "#A7BCE8",
             "#0043CB",
@@ -25,15 +26,62 @@
         ],
         "xTicks": [
             0,
-            1001,
-            100
+            1000,
+            11
         ],
+        "xTicksType": "int",
         "xTicksMinor": null,
+        "xMinorTicksType": "int",
         "xScale": null,
         "xOffset": null,
         "yLimit": null,
         "yTicks": null,
+        "yTicksType": "int",
         "yTicksMinor": null,
+        "yMinorTicksType": "int",
+        "yScale": null,
+        "yOffset": null,
+        "startNs": 0,
+        "endNs": 0,
+        "indexOffset": 0
+    },
+    "RMSD_1000": {
+        "name": "RMSD_1000",
+        "comment": "Use this with datasets that have one RMSD value per nanosecond, no mov avg",
+        "type": "line",
+        "numRows": 1000,
+        "numPlots": 3,
+        "xAxisTitle": "Nanoseconds",
+        "yAxisTitle": "RMSD (Å)",
+        "movAvg": false,
+        "movAvgFr": 10,
+        "movAvgName": "[NAME] Mov. Avg.",
+        "onlyMovAvg": false,
+        "palette": [
+            "#2e74ff",
+            "#ff1c1c",
+            "#45bf1d"
+        ],
+        "color": "",
+        "xLimit": [
+            0,
+            1000
+        ],
+        "xTicks": [
+            0,
+            1000,
+            11
+        ],
+        "xTicksType": "int",
+        "xTicksMinor": null,
+        "xMinorTicksType": "int",
+        "xScale": null,
+        "xOffset": null,
+        "yLimit": null,
+        "yTicks": null,
+        "yTicksType": "int",
+        "yTicksMinor": null,
+        "yMinorTicksType": "int",
         "yScale": null,
         "yOffset": null,
         "startNs": 0,
@@ -51,6 +99,7 @@
         "movAvg": false,
         "movAvgFr": 0,
         "movAvgName": "",
+        "onlyMovAvg": false,
         "palette": [],
         "color": [
             "YlOrRd",
@@ -63,14 +112,16 @@
         ],
         "xTicks": [
             0,
-            1,
+            0,
             1
         ],
+        "xTicksType": "int",
         "xTicksMinor": [
             -180,
-            181,
-            45
+            180,
+            9
         ],
+        "xMinorTicksType": "int",
         "xScale": 1,
         "xOffset": null,
         "yLimit": [
@@ -79,14 +130,16 @@
         ],
         "yTicks": [
             0,
-            1,
+            0,
             1
         ],
+        "yTicksType": "int",
         "yTicksMinor": [
             -180,
-            181,
-            45
+            180,
+            9
         ],
+        "yMinorTicksType": "int",
         "yScale": 1,
         "yOffset": null,
         "startNs": 2,
@@ -104,6 +157,7 @@
         "movAvg": false,
         "movAvgFr": 0,
         "movAvgName": "",
+        "onlyMovAvg": false,
         "palette": [],
         "color": [
             "YlOrRd"
@@ -114,15 +168,19 @@
         ],
         "xTicks": [
             1,
-            1001,
-            100
+            1000,
+            11
         ],
+        "xTicksType": "int",
         "xTicksMinor": null,
+        "xMinorTicksType": "int",
         "xScale": null,
         "xOffset": null,
         "yLimit": [],
         "yTicks": [],
+        "yTicksType": "int",
         "yTicksMinor": null,
+        "yMinorTicksType": "int",
         "yScale": 1,
         "yOffset": 0,
         "startNs": 0,
@@ -140,6 +198,7 @@
         "movAvg": false,
         "movAvgFr": 0,
         "movAvgName": "",
+        "onlyMovAvg": false,
         "palette": [],
         "color": [
             "GnBu"
@@ -150,15 +209,19 @@
         ],
         "xTicks": [
             1,
-            1001,
-            100
+            1000,
+            11
         ],
+        "xTicksType": "int",
         "xTicksMinor": null,
+        "xMinorTicksType": "int",
         "xScale": null,
         "xOffset": null,
         "yLimit": [],
         "yTicks": [],
+        "yTicksType": "int",
         "yTicksMinor": null,
+        "yMinorTicksType": "int",
         "yScale": 1,
         "yOffset": 0,
         "startNs": 0,
@@ -176,6 +239,7 @@
         "movAvg": false,
         "movAvgFr": 0,
         "movAvgName": "",
+        "onlyMovAvg": false,
         "palette": [],
         "color": [
             "RdPu"
@@ -186,15 +250,19 @@
         ],
         "xTicks": [
             1,
-            1001,
-            100
+            1000,
+            11
         ],
+        "xTicksType": "int",
         "xTicksMinor": null,
+        "xMinorTicksType": "int",
         "xScale": null,
         "xOffset": null,
         "yLimit": [],
         "yTicks": [],
+        "yTicksType": "int",
         "yTicksMinor": null,
+        "yMinorTicksType": "int",
         "yScale": 1,
         "yOffset": 0,
         "startNs": 0,
@@ -212,6 +280,7 @@
         "movAvg": false,
         "movAvgFr": 0,
         "movAvgName": "",
+        "onlyMovAvg": false,
         "palette": [],
         "color": [
             "YlOrRd"
@@ -222,14 +291,16 @@
         ],
         "xTicks": [
             0,
-            1,
+            0,
             1
         ],
+        "xTicksType": "int",
         "xTicksMinor": [
             -180,
-            181,
-            45
+            180,
+            9
         ],
+        "xMinorTicksType": "int",
         "xScale": 1,
         "xOffset": null,
         "yLimit": [
@@ -238,14 +309,16 @@
         ],
         "yTicks": [
             0,
-            1,
+            0,
             1
         ],
+        "yTicksType": "int",
         "yTicksMinor": [
             -180,
-            181,
-            45
+            180,
+            9
         ],
+        "yMinorTicksType": "int",
         "yScale": 1,
         "yOffset": null,
         "startNs": 2,
@@ -263,6 +336,7 @@
         "movAvg": false,
         "movAvgFr": 0,
         "movAvgName": "",
+        "onlyMovAvg": false,
         "palette": [],
         "color": [
             "GnBu"
@@ -273,14 +347,16 @@
         ],
         "xTicks": [
             0,
-            1,
+            0,
             1
         ],
+        "xTicksType": "int",
         "xTicksMinor": [
             -180,
-            181,
-            45
+            180,
+            9
         ],
+        "xMinorTicksType": "int",
         "xScale": 1,
         "xOffset": null,
         "yLimit": [
@@ -289,14 +365,16 @@
         ],
         "yTicks": [
             0,
-            1,
+            0,
             1
         ],
+        "yTicksType": "int",
         "yTicksMinor": [
             -180,
-            181,
-            45
+            180,
+            9
         ],
+        "yMinorTicksType": "int",
         "yScale": 1,
         "yOffset": null,
         "startNs": 2,
@@ -314,6 +392,7 @@
         "movAvg": false,
         "movAvgFr": 0,
         "movAvgName": "",
+        "onlyMovAvg": false,
         "palette": [],
         "color": [
             "RdPu"
@@ -324,14 +403,16 @@
         ],
         "xTicks": [
             0,
-            1,
+            0,
             1
         ],
+        "xTicksType": "int",
         "xTicksMinor": [
             -180,
-            181,
-            45
+            180,
+            9
         ],
+        "xMinorTicksType": "int",
         "xScale": 1,
         "xOffset": null,
         "yLimit": [
@@ -340,14 +421,16 @@
         ],
         "yTicks": [
             0,
-            1,
+            0,
             1
         ],
+        "yTicksType": "int",
         "yTicksMinor": [
             -180,
-            181,
-            45
+            180,
+            9
         ],
+        "yMinorTicksType": "int",
         "yScale": 1,
         "yOffset": null,
         "startNs": 2,
@@ -365,10 +448,11 @@
         "movAvg": false,
         "movAvgFr": 0,
         "movAvgName": "",
+        "onlyMovAvg": false,
         "palette": [
-            "#0043CB",
-            "#BF0202",
-            "#246210"
+            "#2e74ff",
+            "#ff1c1c",
+            "#45bf1d"
         ],
         "color": [],
         "xLimit": [
@@ -380,12 +464,103 @@
             394,
             50
         ],
+        "xTicksType": "int",
         "xTicksMinor": null,
+        "xMinorTicksType": "int",
         "xScale": 1,
         "xOffset": 1,
         "yLimit": null,
         "yTicks": null,
+        "yTicksType": "int",
         "yTicksMinor": null,
+        "yMinorTicksType": "int",
+        "yScale": null,
+        "yOffset": null,
+        "startNs": 0,
+        "endNs": 0,
+        "indexOffset": 0
+    },
+    "RMSF_DBD": {
+        "name": "RMSF_DBD",
+        "comment": "RMSF of just the DBD",
+        "type": "line",
+        "numRows": 193,
+        "numPlots": 3,
+        "xAxisTitle": "Residue Number",
+        "yAxisTitle": "RMSF (Å)",
+        "movAvg": false,
+        "movAvgFr": 0,
+        "movAvgName": "",
+        "onlyMovAvg": false,
+        "palette": [
+            "#2e74ff",
+            "#ff1c1c",
+            "#45bf1d"
+        ],
+        "color": [],
+        "xLimit": [
+            96,
+            290
+        ],
+        "xTicks": [
+            96,
+            290,
+            15
+        ],
+        "xTicksType": "int",
+        "xTicksMinor": null,
+        "xMinorTicksType": "int",
+        "xScale": 1,
+        "xOffset": 96,
+        "yLimit": null,
+        "yTicks": null,
+        "yTicksType": "int",
+        "yTicksMinor": null,
+        "yMinorTicksType": "int",
+        "yScale": null,
+        "yOffset": null,
+        "startNs": 0,
+        "endNs": 0,
+        "indexOffset": 0
+    },
+    "RMSF_DBD_Four": {
+        "name": "RMSF_DBD_Four",
+        "comment": "RMSF of just the DBD",
+        "type": "line",
+        "numRows": 193,
+        "numPlots": 4,
+        "xAxisTitle": "Residue Number",
+        "yAxisTitle": "RMSF (Å)",
+        "movAvg": false,
+        "movAvgFr": 0,
+        "movAvgName": "",
+        "onlyMovAvg": false,
+        "palette": [
+            "#2e74ff",
+            "#ff1c1c",
+            "#ffc400",
+            "#45bf1d"
+        ],
+        "color": [],
+        "xLimit": [
+            96,
+            290
+        ],
+        "xTicks": [
+            96,
+            290,
+            15
+        ],
+        "xTicksType": "int",
+        "xTicksMinor": null,
+        "xMinorTicksType": "int",
+        "xScale": 1,
+        "xOffset": 96,
+        "yLimit": null,
+        "yTicks": null,
+        "yTicksType": "int",
+        "yTicksMinor": null,
+        "yMinorTicksType": "int",
         "yScale": null,
         "yOffset": null,
         "startNs": 0,
@@ -396,13 +571,14 @@
         "name": "RMSD",
         "comment": "",
         "type": "line",
-        "numRows": 1001000,
+        "numRows": 1000000,
         "numPlots": 3,
         "xAxisTitle": "Nanoseconds",
         "yAxisTitle": "RMSD (Å)",
         "movAvg": true,
-        "movAvgFr": 1000,
+        "movAvgFr": 10000,
         "movAvgName": "[NAME] Mov. Avg.",
+        "onlyMovAvg": false,
         "palette": [
             "#A7BCE8",
             "#0043CB",
@@ -418,15 +594,70 @@
         ],
         "xTicks": [
             0,
-            1001,
-            100
+            1000,
+            11
         ],
+        "xTicksType": "int",
         "xTicksMinor": null,
-        "xScale": 100,
+        "xMinorTicksType": "int",
+        "xScale": 1000,
         "xOffset": null,
         "yLimit": null,
         "yTicks": null,
+        "yTicksType": "int",
         "yTicksMinor": null,
+        "yMinorTicksType": "int",
+        "yScale": null,
+        "yOffset": null,
+        "startNs": 0,
+        "endNs": 0,
+        "indexOffset": 0
+    },
+    "RMSD_Four": {
+        "name": "RMSD_Four",
+        "comment": "",
+        "type": "line",
+        "numRows": 1000000,
+        "numPlots": 4,
+        "xAxisTitle": "Nanoseconds",
+        "yAxisTitle": "RMSD (Å)",
+        "movAvg": true,
+        "movAvgFr": 10000,
+        "movAvgName": "[NAME] Mov. Avg.",
+        "onlyMovAvg": true,
+        "palette": [
+            "#A7BCE8",
+            "#0043CB",
+            "#FDA4A4",
+            "#BF0202",
+            "#ffeaa6",
+            "#ffc400",
+            "#A0C595",
+            "#246210"
+        ],
+        "color": [],
+        "xLimit": [
+            0,
+            1000
+        ],
+        "xTicks": [
+            0,
+            1000,
+            11
+        ],
+        "xTicksType": "int",
+        "xTicksMinor": null,
+        "xMinorTicksType": "int",
+        "xScale": 1000,
+        "xOffset": null,
+        "yLimit": [
+            0,
+            1
+        ],
+        "yTicks": null,
+        "yTicksType": "int",
+        "yTicksMinor": null,
+        "yMinorTicksType": "int",
         "yScale": null,
         "yOffset": null,
         "startNs": 0,
@@ -444,6 +675,7 @@
         "movAvg": true,
         "movAvgFr": 1000,
         "movAvgName": "[NAME] Mov. Avg.",
+        "onlyMovAvg": false,
         "palette": [
             "#A7BCE8",
             "#0043CB"
@@ -455,15 +687,325 @@
         ],
         "xTicks": [
             0,
-            1001,
-            100
+            1000,
+            11
         ],
+        "xTicksType": "int",
         "xTicksMinor": null,
+        "xMinorTicksType": "int",
         "xScale": 100,
         "xOffset": null,
         "yLimit": null,
         "yTicks": null,
+        "yTicksType": "int",
         "yTicksMinor": null,
+        "yMinorTicksType": "int",
+        "yScale": null,
+        "yOffset": null,
+        "startNs": 0,
+        "endNs": 0,
+        "indexOffset": 0
+    },
+    "DihedralRMSD": {
+        "name": "DihedralRMSD",
+        "comment": "Use this for Polar Dihedral RMSD",
+        "type": "line",
+        "numRows": 1000,
+        "numPlots": 3,
+        "xAxisTitle": "Nanoseconds",
+        "yAxisTitle": "RMSD (Å)",
+        "movAvg": false,
+        "movAvgFr": 10,
+        "movAvgName": "[NAME] Mov. Avg.",
+        "onlyMovAvg": true,
+        "palette": [
+            "#2e74ff",
+            "#ff1c1c",
+            "#45bf1d"
+        ],
+        "color": [],
+        "xLimit": [
+            0,
+            1000
+        ],
+        "xTicks": [
+            0,
+            1000,
+            11
+        ],
+        "xTicksType": "int",
+        "xTicksMinor": null,
+        "xMinorTicksType": "int",
+        "xScale": 1,
+        "xOffset": null,
+        "yLimit": null,
+        "yTicks": null,
+        "yTicksType": "int",
+        "yTicksMinor": null,
+        "yMinorTicksType": "int",
+        "yScale": null,
+        "yOffset": null,
+        "startNs": 0,
+        "endNs": 0,
+        "indexOffset": 0
+    },
+    "WTSimilarity": {
+        "name": "WTSimilarity",
+        "comment": "Use this to plot WT Similarity data",
+        "type": "line",
+        "numRows": 1000,
+        "numPlots": 2,
+        "xAxisTitle": "Nanoseconds",
+        "yAxisTitle": "Similarity",
+        "movAvg": true,
+        "movAvgFr": 10,
+        "movAvgName": "WT Similarity to [NAME]\n10 fr. Mov. Avg.",
+        "onlyMovAvg": true,
+        "palette": [
+            "red",
+            "dodgerblue"
+        ],
+        "color": [],
+        "xLimit": [
+            0,
+            1000
+        ],
+        "xTicks": [
+            0,
+            1000,
+            11
+        ],
+        "xTicksType": "int",
+        "xTicksMinor": null,
+        "xMinorTicksType": "int",
+        "xScale": 1,
+        "xOffset": null,
+        "yLimit": null,
+        "yTicks": null,
+        "yTicksType": "int",
+        "yTicksMinor": null,
+        "yMinorTicksType": "int",
+        "yScale": null,
+        "yOffset": null,
+        "startNs": 0,
+        "endNs": 0,
+        "indexOffset": 0
+    },
+    "RoG": {
+        "name": "RoG",
+        "comment": "Use this for plotting Radius of Gyration (RoG)",
+        "type": "line",
+        "numRows": 1000,
+        "numPlots": 3,
+        "xAxisTitle": "Nanoseconds",
+        "yAxisTitle": "Radius of Gyration (Å)",
+        "movAvg": false,
+        "movAvgFr": 10,
+        "movAvgName": "[NAME] Mov. Avg.",
+        "onlyMovAvg": true,
+        "palette": [
+            "#2e74ff",
+            "#ff1c1c",
+            "#45bf1d"
+        ],
+        "color": [],
+        "xLimit": [
+            0,
+            1000
+        ],
+        "xTicks": [
+            0,
+            1000,
+            11
+        ],
+        "xTicksType": "int",
+        "xTicksMinor": null,
+        "xMinorTicksType": "int",
+        "xScale": 1,
+        "xOffset": null,
+        "yLimit": [
+            20,
+            30
+        ],
+        "yTicks": null,
+        "yTicksType": "int",
+        "yTicksMinor": null,
+        "yMinorTicksType": "int",
+        "yScale": null,
+        "yOffset": null,
+        "startNs": 0,
+        "endNs": 0,
+        "indexOffset": 0
+    },
+    "HBondCount": {
+        "name": "HBondCount",
+        "comment": "Use this for plotting the number of HBonds",
+        "type": "line",
+        "numRows": 1000,
+        "numPlots": 3,
+        "xAxisTitle": "Nanoseconds",
+        "yAxisTitle": "Num. of Hydrogen Bonds",
+        "movAvg": true,
+        "movAvgFr": 10,
+        "movAvgName": "[NAME] Mov. Avg.",
+        "onlyMovAvg": true,
+        "palette": [
+            "#2e74ff",
+            "#ff1c1c",
+            "#45bf1d"
+        ],
+        "color": [],
+        "xLimit": [
+            0,
+            1000
+        ],
+        "xTicks": [
+            0,
+            1000,
+            11
+        ],
+        "xTicksType": "int",
+        "xTicksMinor": null,
+        "xMinorTicksType": "int",
+        "xScale": 1,
+        "xOffset": null,
+        "yLimit": [
+            30,
+            70
+        ],
+        "yTicks": null,
+        "yTicksType": "int",
+        "yTicksMinor": null,
+        "yMinorTicksType": "int",
+        "yScale": null,
+        "yOffset": null,
+        "startNs": 0,
+        "endNs": 0,
+        "indexOffset": 0
+    },
+    "UniqueHBonds": {
+        "name": "UniqueHBonds",
+        "comment": "Use this for plotting the number of unique HBonds",
+        "type": "line",
+        "numRows": 1000,
+        "numPlots": 3,
+        "xAxisTitle": "Nanoseconds",
+        "yAxisTitle": "Num. of Hydrogen Bonds",
+        "movAvg": false,
+        "movAvgFr": 10,
+        "movAvgName": "[NAME] Mov. Avg.",
+        "onlyMovAvg": true,
+        "palette": [
+            "#2e74ff",
+            "#ff1c1c",
+            "#45bf1d"
+        ],
+        "color": [],
+        "xLimit": [
+            -10,
+            1000
+        ],
+        "xTicks": [
+            0,
+            1000,
+            11
+        ],
+        "xTicksType": "int",
+        "xTicksMinor": null,
+        "xMinorTicksType": "int",
+        "xScale": 1,
+        "xOffset": null,
+        "yLimit": null,
+        "yTicks": null,
+        "yTicksType": "int",
+        "yTicksMinor": null,
+        "yMinorTicksType": "int",
+        "yScale": null,
+        "yOffset": null,
+        "startNs": 0,
+        "endNs": 0,
+        "indexOffset": 0
+    },
+    "DihedralRMSDMovAvg": {
+        "name": "DihedralRMSDMovAvg",
+        "comment": "Use this for Polar Dihedral RMSD",
+        "type": "line",
+        "numRows": 1000,
+        "numPlots": 3,
+        "xAxisTitle": "Nanoseconds",
+        "yAxisTitle": "RMSD (Å)",
+        "movAvg": true,
+        "movAvgFr": 10,
+        "movAvgName": "[NAME] Mov. Avg.",
+        "onlyMovAvg": true,
+        "palette": [
+            "#2e74ff",
+            "#ff1c1c",
+            "#45bf1d"
+        ],
+        "color": [],
+        "xLimit": [
+            0,
+            1000
+        ],
+        "xTicks": [
+            0,
+            1000,
+            11
+        ],
+        "xTicksType": "int",
+        "xTicksMinor": null,
+        "xMinorTicksType": "int",
+        "xScale": 1,
+        "xOffset": null,
+        "yLimit": null,
+        "yTicks": null,
+        "yTicksType": "int",
+        "yTicksMinor": null,
+        "yMinorTicksType": "int",
+        "yScale": null,
+        "yOffset": null,
+        "startNs": 0,
+        "endNs": 0,
+        "indexOffset": 0
+    },
+    "DihedralRMSF": {
+        "name": "DihedralRMSF",
+        "comment": "Use this for Polar Dihedral RMSF",
+        "type": "line",
+        "numRows": 393,
+        "numPlots": 3,
+        "xAxisTitle": "Angle Number",
+        "yAxisTitle": "RMSF (Å)",
+        "movAvg": false,
+        "movAvgFr": 10,
+        "movAvgName": "[NAME] Mov. Avg.",
+        "onlyMovAvg": true,
+        "palette": [
+            "#2e74ff",
+            "#ff1c1c",
+            "#45bf1d"
+        ],
+        "color": [],
+        "xLimit": [
+            1,
+            393
+        ],
+        "xTicks": [
+            1,
+            393,
+            8
+        ],
+        "xTicksType": "int",
+        "xTicksMinor": null,
+        "xMinorTicksType": "int",
+        "xScale": 1,
+        "xOffset": 1,
+        "yLimit": null,
+        "yTicks": null,
+        "yTicksType": "int",
+        "yTicksMinor": null,
+        "yMinorTicksType": "int",
         "yScale": null,
         "yOffset": null,
         "startNs": 0,

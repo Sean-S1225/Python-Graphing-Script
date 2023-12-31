@@ -14,6 +14,21 @@
         "width": 10,
         "height": 13
     },
+    "Six": {
+        "name": "Six",
+        "comment": "Use with subplot preset six for six RMSD figures.",
+        "rows": 1,
+        "cols": 1,
+        "numSubFigures": 1,
+        "widthRatios": [
+            1
+        ],
+        "heightRatios": [
+            1
+        ],
+        "width": 13,
+        "height": 10
+    },
     "Rama4,3": {
         "name": "Rama4,3",
         "comment": "Four Ramachandran plots (WT, Y220C, PK11000, All) horizontally, and three gradients vertically below them",
@@ -61,5 +76,50 @@
         ],
         "width": 10,
         "height": 4
+    },
+    "Two": {
+        "name": "Two",
+        "comment": "Two RMSF plots on top of one another",
+        "rows": 1,
+        "cols": 1,
+        "numSubFigures": 1,
+        "widthRatios": [
+            1
+        ],
+        "heightRatios": [
+            1
+        ],
+        "width": 20,
+        "height": 10
+    },
+    "Square": {
+        "name": "Square",
+        "comment": "Use for four RMSD-type plots (2 rows, 2 cols of plots)",
+        "rows": 1,
+        "cols": 1,
+        "numSubFigures": 1,
+        "widthRatios": [
+            1
+        ],
+        "heightRatios": [
+            1
+        ],
+        "width": 10,
+        "height": 7
+    },
+    "14DihedralPlots": {
+        "name": "14DihedralPlots",
+        "comment": "A big plot to use with the big dihedral datasets",
+        "rows": 1,
+        "cols": 1,
+        "numSubFigures": 1,
+        "widthRatios": [
+            1
+        ],
+        "heightRatios": [
+            1
+        ],
+        "width": 20,
+        "height": 13
     }
 }
